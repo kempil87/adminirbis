@@ -1,0 +1,45 @@
+.shop_wrap{
+    position: relative;
+    transition: linear .3s;
+    cursor: pointer;
+}
+.img-block-shop{
+overflow: hidden;
+    width: 215px;
+    height: 156px;
+}
+.img-block-shop img{
+    object-fit: cover;
+}
+.shop_wrap:hover img{
+    transform: scale(1.1);
+    transition: linear .3s;
+}
+.img-wrap-shop img{
+    transition: linear .1s;
+}
+.img-wrap-shop {
+    transition: linear .1s;
+    width: 100%;
+    height: 100%;
+}
+.shop_badge{
+    top: 6px;
+    background: #be1a30;
+    color: #fff;
+    font-size: 13px;
+    left: -6px;
+    padding: 6px 10px 4px;
+    position: absolute;
+    text-transform: uppercase;
+    z-index: 60;
+}
+.shop_salePrice{
+    color: #be1a30;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: line-through;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding:3px 5px;
+    border-radius: 4px;
+}

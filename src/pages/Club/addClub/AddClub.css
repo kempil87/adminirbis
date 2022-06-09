@@ -1,0 +1,12 @@
+.input-container div{
+    margin: 20px;
+}
+.input-container input{
+    margin-left: 50px;
+    transition: ease-in .2s;
+    color: rgb(133, 133, 133);
+}
+.input-container input:focus{
+    transform: translateX(-28px);
+    transition: ease-in .2s;
+}

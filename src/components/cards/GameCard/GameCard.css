@@ -1,0 +1,132 @@
+.champ-wrap{
+    background: #1f222d;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.next-game{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 22px 30px;
+}
+.irbis-logo-game{
+    width: 111px;
+    height: 128px;
+    margin-left: 15px;
+    transform: scale(.75);
+}
+.prev-game{
+    color: white;
+    flex-direction: column;
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    padding: 22px 30px;
+}.prev-game h5{
+     font-size: 18px;
+ }
+.next-game h5{
+    font-size: 18px;
+}
+.home-team{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo-game-prev{
+
+    transform: scale(.71);
+}
+.game-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 45px;
+}
+.game-date{
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+}.game-date span{
+     margin-right: 6px;
+     font-size: 18px;
+ }
+.game-score{
+    font-size: 26px;
+    border-bottom: 1px dotted #fff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+.game-league{
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+.game-place{
+    display: flex;
+    align-items: center;
+}
+.game-place span{
+    margin-right: 6px;
+    font-size: 18px;
+}
+.guest-team{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.team-name{
+    font-size: 17px;
+    font-weight: 500;
+}
+.team-city{
+    font-size: 14px;
+    color: #868686;
+}
+.game-link-wrap {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.game-link a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+.game-link:hover {
+    transform: translateY(-3px);
+    transition: ease .4s;
+}
+.game-link  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: ease .4s;
+    cursor: pointer;
+}
+.game-link span{
+    color: #6e6c6c;
+    font-size: 20px;
+}
+.game-link span:nth-child(1){
+    margin-top: 4px;
+    margin-right: 6px;
+}
+.game-link h6{
+    margin-right: 6px;
+    font-size: 12px;
+    color: #6e6c6c;
+}

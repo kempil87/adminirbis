@@ -1,0 +1,31 @@
+
+
+
+
+.search-club{
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    background: none;
+    outline: none;
+    padding-left: 28px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    width: 30px;
+    transition: all .38s ease-in;
+    cursor: pointer;
+    z-index: 600;
+}
+.search-club:focus{
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid;
+    background: none;
+    outline: none;
+    padding-left: 28px;
+    font-size: 16px;
+    width: 235px;
+    transition: all .38s ease-in;
+}

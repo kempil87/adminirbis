@@ -1,0 +1,40 @@
+.addnews-input{
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    background: none;
+    outline: none;
+    padding-left: 8px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+
+
+.addnews-input:focus{
+    transform: translateX(-28px);
+    transition: ease-in .2s;
+}
+.addnews-input:focus {
+    border-bottom: 2px solid rgba(23, 52, 96, 0.7);
+}
+.chevron_right{
+    transform: rotate(180deg);
+}
+.back{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    transition: linear .2s;
+}
+.back:hover{
+transform: translateX(-5px);
+    transition: linear .2s;
+}
+.back:hover{
+    color: white;
+}
+.id-list h6{
+    margin-left: 14px;
+    color: #d3bea4;
+}
