@@ -167,7 +167,7 @@ const AddNews = () => {
                 <h5>Список ссылок</h5>
                 <div>
                     {cl.map((i)=>(
-                        <div className="d-flex id-list">
+                        <div key={i._id} className="d-flex id-list">
                             <h6>{i.name}</h6>
                             <h6>: {i._id}</h6>
                         </div>

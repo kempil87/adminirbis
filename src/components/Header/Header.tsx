@@ -1,35 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Nav, Navbar} from "react-bootstrap";
 import {Link, NavLink} from "react-router-dom";
 import "./Header.css"
-import {useDispatch} from "react-redux";
+import {useRootStore} from "../../base/hooks/useRootStore";
 
 
 export const Header = () => {
-    const dispatch = useDispatch()
-    // const email = localStorage.getItem("email")
-    // const [usInfo, setUsInfo] = useState(null)
-
-
-    //@TODO: не понял для чего функция если ответ не приходит нормально
-    const getUserInfo = () => {
-        // api.post('user', {email}).then((res) => {
-        //     setUsInfo(res.data)
-        // })
-    };
+    const {authStore} = useRootStore();
 
     const logout = () => {
-        dispatch({
-            type: "DELETE_TOKEN",
-            payload: null
-
-        })
-        localStorage.clear()
+        authStore.logout()
     }
 
-    useEffect(() => {
-        getUserInfo()
-    }, [])
 
     return (
 

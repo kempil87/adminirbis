@@ -14,8 +14,12 @@ module.exports = {
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks",
+        "@typescript-eslint",
     ],
     "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": 0
     }
 }
