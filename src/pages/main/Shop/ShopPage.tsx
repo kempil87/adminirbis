@@ -1,48 +1,23 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {IrbisLoader} from "../../../../components/ui/Loaders/IrbisLoader";
-import Notification from "../../../../components/ui/Notification/Notification";
+import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
+import Notification from "../../../components/ui/Notification/Notification";
 import {useState} from "react";
-import {api} from "../../../../base/axios";
 import {useEffect} from "react";
-import {ShopCard} from "../../../../components/cards/ShopCard/ShopCard";
+import {ShopCard} from "../../../components/cards/ShopCard/ShopCard";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../../base/hooks/useRootStore";
 
-const ShopPage = () => {
-
-    const [shop, setShop] = useState([]);
-    const [loader, setLoader] = useState(true);
-    const [loaderDelete, setLoaderDelete] = useState(false);
+const ShopPage = observer(() => {
+    const {shopStore} = useRootStore();
     const [searchShop, setSearchShop] = useState('');
 
-    const filterShop = shop.filter(shop =>{
-        return shop.name.toLowerCase().includes(searchShop.toLowerCase())
-    })
-    const getAllShop = (isDelete) => {
-        api.get('/products').then((res) => {
-            setTimeout(() => {
-                setShop(res.data.reverse())
-                setLoader(false)
-            }, isDelete ? 0 : 1000)
-        })
-    }
+    const filterShop = shopStore.allShop.filter(shop => shop.name.toLowerCase().includes(searchShop.toLowerCase()))
 
-    const deleteShop = (id) => {
-        const res = window.confirm("Вы действительно хотите удалить ?")
-        if (!res) {
-            return
-        }
 
-        setLoaderDelete(true)
-        api.get(`/products/delete/${id}`).then((res) => {
-            getAllShop(true)
-            setTimeout(() => {
-                setLoaderDelete(false)
-            }, 1800)
-        })
-    }
 
     useEffect(() => {
-        getAllShop(false)
+        shopStore.getAllShop()
     }, [])
 
     return (
@@ -69,7 +44,7 @@ const ShopPage = () => {
 
                 </div>
                 <div className="d-flex flex-column">
-                    {loader ? (
+                    {shopStore.loader ? (
                         <IrbisLoader/>
                     ) : (
                         <>
@@ -80,7 +55,7 @@ const ShopPage = () => {
                                     name={m.name}
                                     image={m.image}
                                     _id={m._id}
-                                    deleteShop={(id) => deleteShop(id)}
+                                    deleteShop={(id) => shopStore.deleteShop(id)}
                                     badge={m.badge}
                                     price={m.price}
                                 />
@@ -89,11 +64,11 @@ const ShopPage = () => {
                     )}
                 </div>
 
-                {loaderDelete && (
+                {shopStore.loaderNotification && (
                     <Notification text='Товар был успешно удален' icon='check_circle'/>
                 )}
             </div>
     );
-};
+});
 
 export default ShopPage;

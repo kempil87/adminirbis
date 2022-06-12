@@ -7,7 +7,7 @@ import Championship from "./pages/main/Champ/Championship";
 import ClubPage from "./pages/main/Club/ClubPage/ClubPage";
 import NewsPage from "./pages/main/News/NewsPage/NewsPage";
 import MediaPage from "./pages/main/Media/MediaPage";
-import ShopPage from "./pages/main/Shop/ShopPage/ShopPage";
+import ShopPage from "./pages/main/Shop/ShopPage";
 import Error from "./components/Error/Error";
 import Auth from "./pages/reg/auth/Auth";
 import {useEffect, useState} from "react";
@@ -49,7 +49,7 @@ export const App = observer(() => {
                 <Header/>
             )}
 
-            <div className="container" style={{marginTop: 76, minHeight: "90vh"}}>
+            <div className="container" style={{marginTop:authStore.token ? 76 :0, minHeight: "100vh"}}>
                 <Routes>
                     {authStore.token ? (
                         <>

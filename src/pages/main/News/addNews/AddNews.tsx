@@ -1,56 +1,33 @@
 import React from 'react';
-import {useState} from "react";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
-import {api} from "../../../../base/axios";
 import Notification from "../../../../components/ui/Notification/Notification";
 import "./AddNews.css"
 import {Link} from "react-router-dom";
-import {useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../../../base/hooks/useRootStore";
 
-const AddNews = () => {
-    const [news, setNews] = useState({
-        title: "",
-        date: "",
-        image: "",
-        badge: "",
-        source: "",
-        tag: "",
-        shortSubTitle: "",
-        subtitle: "",
-    })
+const AddNews = observer(() => {
 
-    const [showNote, setShowNote] = useState(false);
-    const [cl, setCl] = useState([]);
+    const {newsStore} = useRootStore();
 
-    const addNews = () => {
-        if (!!news.title && !news.date && !news.image) {
-            alert('Заполните обязательные поля')
-            return
-        }
+    const {register, handleSubmit, reset} = useForm();
 
-        api.post("/news/create", news).then((res) => {
-            setShowNote(true)
-            setTimeout(() => {
-                setShowNote(false)
-                clearFields()
-            }, 2000)
-
-        })
-    }
-
-    const clearFields = () => {
-        window.location.reload();
-    }
-    const getClub = () => {
-        api.get("/club").then((res) => {
-            setCl(res.data)
-        })
+    const addNews = (data) => {
+        newsStore.addNews(data).then(() => reset())
     }
 
 
-    useEffect(() => {
-        getClub()
-    }, [])
+    // const getClub = () => {
+    //     api.get("/club").then((res) => {
+    //         setCl(res.data)
+    //     })
+    // }
+
+    //
+    // useEffect(() => {
+    //     getClub()
+    // }, [])
 
     return (
         <>
@@ -64,26 +41,21 @@ const AddNews = () => {
 
                     <label className="d-flex justify-content-between">
                         Название
-                        <input
-                            className='addnews-input'
-                            value={news.title}
-                            onChange={(e) => setNews({...news, title: e.target.value})}/>
+                        <input {...register("title")} className='addnews-input'/>
                     </label>
 
                     <label className="d-flex justify-content-between">
                         Дата
                         <input
-                            className='addnews-input'
-                            value={news.date}
-                            onChange={(e) => setNews({...news, date: e.target.value})}/>
+                            {...register("date")}
+                            className='addnews-input'/>
                     </label>
 
                     <label className="d-flex justify-content-between">
                         Фото (url)
                         <input
                             className='addnews-input'
-                            value={news.image}
-                            onChange={(e) => setNews({...news, image: e.target.value})}/>
+                            {...register("image")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
@@ -99,8 +71,7 @@ const AddNews = () => {
                         </div>
                         <input
                             className='addnews-input'
-                            value={news.badge}
-                            onChange={(e) => setNews({...news, badge: e.target.value})}/>
+                            {...register("badge")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
@@ -118,8 +89,7 @@ const AddNews = () => {
                         </div>
                         <input
                             className='addnews-input'
-                            value={news.source}
-                            onChange={(e) => setNews({...news, source: e.target.value})}/>
+                            {...register("source")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
@@ -138,46 +108,46 @@ const AddNews = () => {
 
                         <input
                             className='addnews-input'
-                            value={news.tag}
-                            onChange={(e) => setNews({...news, tag: e.target.value})}/>
+                            {...register("tag")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
                         Описание
                         <input
                             className='addnews-input'
-                            value={news.subtitle}
-                            onChange={(e) => setNews({...news, subtitle: e.target.value})}/>
+                            {...register("subtitle")}/>
                     </label>
                     <label className="d-flex justify-content-between">
                         крат.Описание
                         <input
                             className='addnews-input'
-                            value={news.shortSubTitle}
-                            onChange={(e) => setNews({...news, shortSubTitle: e.target.value})}/>
+                            {...register("shortSubTitle")}/>
                     </label>
                 </div>
-                <Button className='col-6 mt-4 ' variant="dark" onClick={addNews}>Создать</Button>
-                {showNote && (
+                <Button className='col-6 mt-4 ' variant="dark" onClick={handleSubmit(addNews)}>Создать</Button>
+
+                {newsStore.loaderNotification && (
                     <Notification text='Новость была успешно добавлена' icon='check_circle'/>
                 )}
 
             </div>
-            <div>
-                <h5>Список ссылок</h5>
-                <div>
-                    {cl.map((i)=>(
-                        <div key={i._id} className="d-flex id-list">
-                            <h6>{i.name}</h6>
-                            <h6>: {i._id}</h6>
-                        </div>
-                    ))}
-                </div>
 
-            </div>
+            {/*<div>*/}
+            {/*    <h5>Список ссылок</h5>*/}
+            {/*    <div>*/}
+            {/*        {cl.map((i)=>(*/}
+            {/*            <div key={i._id} className="d-flex id-list">*/}
+            {/*                <h6>{i.name}</h6>*/}
+            {/*                <h6>: {i._id}</h6>*/}
+            {/*            </div>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
+
+            {/*</div>*/}
         </>
 
     );
-};
+});
+
 
 export default AddNews;

@@ -3,15 +3,15 @@ import {Nav, Navbar} from "react-bootstrap";
 import {Link, NavLink} from "react-router-dom";
 import "./Header.css"
 import {useRootStore} from "../../base/hooks/useRootStore";
+import {observer} from "mobx-react";
 
 
-export const Header = () => {
+export const Header = observer(() => {
     const {authStore} = useRootStore();
 
     const logout = () => {
         authStore.logout()
     }
-
 
     return (
 
@@ -42,4 +42,4 @@ export const Header = () => {
             </Navbar>
         </div>
     );
-};
+});

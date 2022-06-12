@@ -1,10 +1,14 @@
 import React from 'react';
 import './ShopCard.css'
 import {Link} from "react-router-dom";
+import {IShop} from "../../../modules/shop/ShopTypes";
 
 
+interface IShopCard extends IShop {
+    deleteShop: (id:string) => void
+}
 
-export const ShopCard = ({price,badge,salePrice,image,_id,date,name,deleteShop}) => {
+export const ShopCard = ({price,badge,salePrice,image,_id,name,deleteShop}:IShopCard) => {
     return (
         <div  className="d-flex justify-content-between mt-3">
             <div className="d-flex shop_wrap">

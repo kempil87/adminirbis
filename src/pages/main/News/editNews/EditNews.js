@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const EditNews = () => {
     const {id} = useParams()
+
     const navigate = useNavigate();
 
     const [news, setNews] = useState({});

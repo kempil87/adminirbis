@@ -1,32 +1,31 @@
-import React from 'react';
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {api} from "../../../base/axios";
+import React, {useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../../base/hooks/useRootStore";
+import {useForm} from "react-hook-form";
+import Notification from "../../../components/ui/Notification/Notification";
 
-const EditShop = () => {
-
+const EditShop = observer(() => {
     const {id} = useParams()
-    const navigate = useNavigate();
+    const {shopStore} = useRootStore()
 
-    const [shop, setShop] = useState({});
+    const {register, handleSubmit, setValue} = useForm();
 
-    const getShop = () => {
-        api.get(`/products/${id}`).then((res) =>{
-            setShop(res.data)
+    const setFormValues = () =>{
+        Object.keys(shopStore.shop).forEach((key) => {
+            // @ts-ignore
+            setValue(String(key), shopStore.shop[key])
         })
     }
 
-    const sendEditShop = () =>{
-        api.post(`/products/update`, shop).then((res) =>{
-            navigate('/shop');
-
-        })
+    const sendEditShop = (data) => {
+        shopStore.editShop(data)
     }
 
     useEffect(() => {
-        getShop()
-    }, [id])
+        shopStore.getShop(id).then(() => setFormValues())
+    }, [])
 
     return (
         <div className='d-flex align-items-center  pt-5 flex-column '>
@@ -36,24 +35,21 @@ const EditShop = () => {
                     Название
                     <input
                         className='addnews-input'
-                        value={shop.name}
-                        onChange={(e) => setShop({...shop, name: e.target.value})}/>
+                        {...register("name")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
                     Цена
                     <input
                         className='addnews-input'
-                        value={shop.price}
-                        onChange={(e) => setShop({...shop, price: e.target.value})}/>
+                        {...register("price")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
                     Фото (url)
                     <input
                         className='addnews-input'
-                        value={shop.image}
-                        onChange={(e) => setShop({...shop, image: e.target.value})}/>
+                        {...register("image")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
@@ -62,8 +58,7 @@ const EditShop = () => {
                     </div>
                     <input
                         className='addnews-input'
-                        value={shop.badge}
-                        onChange={(e) => setShop({...shop, badge: e.target.value})}/>
+                        {...register("badge")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
@@ -72,14 +67,16 @@ const EditShop = () => {
                     </div>
                     <input
                         className='addnews-input'
-                        value={shop.salePrice}
-                        onChange={(e) => setShop({...shop, salePrice: e.target.value})}/>
+                        {...register("salePrice")}/>
                 </label>
 
             </div>
-            <Button className='mt-5 col-4' variant="light" onClick={sendEditShop}>Сохранить</Button>
+            <Button className='mt-5 col-4' variant="light" onClick={handleSubmit(sendEditShop)}>Сохранить</Button>
+            {shopStore.loaderNotification && (
+                <Notification text='Товар был успешно отредактирован' icon='check_circle'/>
+            )}
         </div>
     );
-};
+});
 
 export default EditShop;
