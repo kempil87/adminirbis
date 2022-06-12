@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from 'react';
-import {api} from "../../base/axios";
+import {api} from "../../../base/axios";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
 
 const EditMedia = () => {

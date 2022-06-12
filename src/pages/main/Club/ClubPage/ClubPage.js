@@ -1,11 +1,11 @@
 import React from 'react';
 import './ClubPage.css'
 import {useEffect, useState} from "react";
-import {api} from "../../../base/axios";
+import {api} from "../../../../base/axios";
 import {Link} from "react-router-dom";
-import Notification from "../../../components/ui/notification";
-import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
-import ClubCard from "../../../components/cards/ClubCard/ClubCard";
+import Notification from "../../../../components/ui/notification";
+import {IrbisLoader} from "../../../../components/ui/Loaders/IrbisLoader";
+import ClubCard from "../../../../components/cards/ClubCard/ClubCard";
 
 const ClubPage = () => {
     const [club, setClub] = useState([]);

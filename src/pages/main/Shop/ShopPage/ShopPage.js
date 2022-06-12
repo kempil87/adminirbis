@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
-import Notification from "../../../components/ui/notification";
+import {IrbisLoader} from "../../../../components/ui/Loaders/IrbisLoader";
+import Notification from "../../../../components/ui/notification";
 import {useState} from "react";
-import {api} from "../../../base/axios";
+import {api} from "../../../../base/axios";
 import {useEffect} from "react";
-import {ShopCard} from "../../../components/cards/ShopCard/ShopCard";
+import {ShopCard} from "../../../../components/cards/ShopCard/ShopCard";
 
 const ShopPage = () => {
 

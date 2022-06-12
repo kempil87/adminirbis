@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./Auth.css"
 import {Link} from "react-router-dom";
-import {useRootStore} from "../../base/hooks/useRootStore";
+import {useRootStore} from "../../../base/hooks/useRootStore";
 import {useForm} from "react-hook-form";
 
 const Auth = () => {

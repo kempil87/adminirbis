@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
-import Notification from "../../components/ui/notification";
+import Notification from "../../../components/ui/notification";
 import {useState} from "react";
-import {api} from "../../base/axios";
+import {api} from "../../../base/axios";
 
 const AddMedia = () => {
 

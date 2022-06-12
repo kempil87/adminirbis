@@ -1,8 +1,8 @@
 import React from 'react';
 import {useState} from "react";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
-import {api} from "../../../base/axios";
-import Notification from "../../../components/ui/notification";
+import {api} from "../../../../base/axios";
+import Notification from "../../../../components/ui/notification";
 import "./AddNews.css"
 import {Link} from "react-router-dom";
 import {useEffect} from "react";

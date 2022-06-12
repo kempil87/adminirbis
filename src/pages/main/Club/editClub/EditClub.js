@@ -1,63 +1,39 @@
-import React, {useEffect} from 'react';
-import './AddClub.css'
-import {Link} from "react-router-dom";
+import React from 'react';
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {api} from "../../../../base/axios";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
-import Notification from "../../../components/ui/notification";
-import {useState} from "react";
-import {api} from "../../../base/axios";
+import Notification from "../../../../components/ui/notification";
 
-const AddCLub = () => {
+const EditClub = () => {
 
-    const [club, setClub] = useState({
-        name: "",
-        number: "",
-        image: "",
-        mainImage: "",
-        position: "",
-        job: "",
-        dateBirthday: "",
-        height: "",
-        weight: "",
-        country: "",
-        grip: "",
-        games: "",
-        goals: "",
-        assist: "",
-        score: "",
-        boxTime: "",
-        plusMinus: "",
-        wins: "",
-        saves: "",
-        safety: "",
-        dryGames: "",
-        personalInfo: "",
-        shortPersonalInfo: ""
-    })
+    const {id} = useParams()
+
+    const navigate = useNavigate();
     const [showNote, setShowNote] = useState(false);
+    const [club, setClub] = useState({});
 
-    const addClub = () => {
-        api.post("/club/create", club).then((res) => {
-            setShowNote(true)
-            setTimeout(() => {
-                setShowNote(false)
-                // clearFields()
-            }, 2000)
-
+    const getClub = () => {
+        api.get(`/club/${id}`).then((res) =>{
+            setClub(res.data)
         })
     }
-    const clearFields = () => {
-        window.location.reload();
+
+    const sendEditClub = () =>{
+        api.post(`/club/update`, club).then((res) =>{
+            setShowNote(true)
+            setTimeout(()=>{
+                navigate('/club');
+            },2500)
+        })
     }
 
-
-
+    useEffect(() => {
+        getClub()
+    }, [id])
 
     return (
         <div>
-            <div className="align-items-center d-flex back-link">
-                <span className="material-symbols-outlined chevron_right">chevron_right</span>
-                <Link to="/club" className="back">Назад</Link>
-            </div>
             <div className="d-flex flex-column  align-items-center pt-5">
 
                 <div className="d-flex  input-container">
@@ -255,15 +231,14 @@ const AddCLub = () => {
                         </label>
                     </div>
                 </div>
-                <Button className='col-3 mt-4 border-light' variant="dark" onClick={addClub}>Создать</Button>
-                <Button className='col-3 mt-2 border-light' variant="dark" onClick={clearFields}>Очистить</Button>
                 {showNote && (
-                    <Notification text='Игрок был успешно добавлен' icon='check_circle'/>
+                    <Notification text="Успешно отредактировано" icon='check_circle'/>
                 )}
-
+                <Button variant="light col-4" onClick={sendEditClub}>Сохранить</Button>
             </div>
+
         </div>
     );
 };
 
-export default AddCLub;
+export default EditClub;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {api} from "../../../base/axios";
+import {api} from "../../../../base/axios";
 import {Button} from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 

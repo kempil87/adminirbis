@@ -1,10 +1,10 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {api} from "../../base/axios";
+import {api} from "../../../base/axios";
 import {Link} from "react-router-dom";
-import {IrbisLoader} from "../../components/ui/Loaders/IrbisLoader";
-import Notification from "../../components/ui/notification";
-import GameCard from "../../components/cards/GameCard/GameCard";
+import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
+import Notification from "../../../components/ui/notification";
+import GameCard from "../../../components/cards/GameCard/GameCard";
 
 const Championship = () => {
 

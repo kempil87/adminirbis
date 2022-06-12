@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import { api} from "../../base/axios";
-import Notification from "../../components/ui/notification";
+import { api} from "../../../base/axios";
+import Notification from "../../../components/ui/notification";
 
 export const Registration = () => {
 
@@ -11,6 +11,8 @@ export const Registration = () => {
     const [warningPassword,setWarningPassword] = useState(false)
     const [showNote,setShowNote] = useState(false)
 
+
+    //@TODO: переписать на ts с использованием реакт хук форм весь слой логики закинуть в authStore
     const registerUser = () => {
 
         if (mail.length < 4 ){

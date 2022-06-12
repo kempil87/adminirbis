@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {api} from "../../../base/axios";
-import NewsCard from "../../../components/cards/NewsCard/NewsCard";
-import {Skeleton} from "../../../components/ui/Loaders/Skeleton";
+import {api} from "../../../../base/axios";
+import NewsCard from "../../../../components/cards/NewsCard/NewsCard";
+import {Skeleton} from "../../../../components/ui/Loaders/Skeleton";
 import {Link} from "react-router-dom";
-import Notification from "../../../components/ui/notification";
-import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
+import Notification from "../../../../components/ui/notification";
 
 const NewsPage = () => {
     const [news, setNews] = useState([]);
@@ -23,6 +22,7 @@ const NewsPage = () => {
             }, isDelete ? 0 : 1000)
         })
     }
+
 
     const deleteNews = (id) => {
         const res = window.confirm("Вы действительно хотите удалить новость?")

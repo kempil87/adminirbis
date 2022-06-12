@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import '../../../pages/News/NewsPage/NewsPage.css'
+import '../../../pages/main/News/NewsPage/NewsPage.css'
 
 const NewsCard = ({image, title,deleteNewsItem,_id,date}) => {
 
