@@ -2,7 +2,7 @@ import './App.css';
 import * as React from "react";
 import {Route, Routes} from "react-router-dom";
 import {Header} from "./components/Header/Header";
-import Home from "./components/Home/Home";
+import Home from "./pages/main/Home/Home";
 import Championship from "./pages/main/Champ/Championship";
 import ClubPage from "./pages/main/Club/ClubPage/ClubPage";
 import NewsPage from "./pages/main/News/NewsPage/NewsPage";
@@ -49,7 +49,7 @@ export const App = observer(() => {
                 <Header/>
             )}
 
-            <div className="container" style={{marginTop: 76}}>
+            <div className="container" style={{marginTop: 76, minHeight: "90vh"}}>
                 <Routes>
                     {authStore.token ? (
                         <>

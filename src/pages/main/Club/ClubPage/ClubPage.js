@@ -3,7 +3,7 @@ import './ClubPage.css'
 import {useEffect, useState} from "react";
 import {api} from "../../../../base/axios";
 import {Link} from "react-router-dom";
-import Notification from "../../../../components/ui/notification";
+import Notification from "../../../../components/ui/Notification/Notification";
 import {IrbisLoader} from "../../../../components/ui/Loaders/IrbisLoader";
 import ClubCard from "../../../../components/cards/ClubCard/ClubCard";
 

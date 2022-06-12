@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
 import {ClubCard} from "../../../components/cards/ClubCard/ClubCard";
-import Notification from "../../../components/ui/notification";
+import Notification from "../../../components/ui/Notification/Notification";
 import {useEffect, useState} from "react";
 import {api} from "../../../base/axios";
 import {MediaCard} from "../../../components/cards/MediaCard/MediaCard";

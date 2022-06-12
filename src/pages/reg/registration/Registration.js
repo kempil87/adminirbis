@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import { api} from "../../../base/axios";
-import Notification from "../../../components/ui/notification";
+import Notification from "../../../components/ui/Notification/Notification";
 
 export const Registration = () => {
 

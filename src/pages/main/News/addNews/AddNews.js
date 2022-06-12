@@ -2,7 +2,7 @@ import React from 'react';
 import {useState} from "react";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
 import {api} from "../../../../base/axios";
-import Notification from "../../../../components/ui/notification";
+import Notification from "../../../../components/ui/Notification/Notification";
 import "./AddNews.css"
 import {Link} from "react-router-dom";
 import {useEffect} from "react";

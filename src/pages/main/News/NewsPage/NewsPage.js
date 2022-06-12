@@ -3,7 +3,7 @@ import {api} from "../../../../base/axios";
 import NewsCard from "../../../../components/cards/NewsCard/NewsCard";
 import {Skeleton} from "../../../../components/ui/Loaders/Skeleton";
 import {Link} from "react-router-dom";
-import Notification from "../../../../components/ui/notification";
+import Notification from "../../../../components/ui/Notification/Notification";
 
 const NewsPage = () => {
     const [news, setNews] = useState([]);
