@@ -2,41 +2,25 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
 import Notification from "../../../components/ui/Notification/Notification";
-import {useState} from "react";
-import {api} from "../../../base/axios";
+import {useRootStore} from "../../../base/hooks/useRootStore";
+import {useForm} from "react-hook-form";
+import {observer} from "mobx-react";
 
-const AddMedia = () => {
+const AddMedia =observer( () => {
+    const {mediaStore} = useRootStore();
 
-    const [media, setMedia] = useState({
-        name: "",
-        date: "",
-        image: "",
-        photograph: "",
-        videoSource: "",
-        all: ""
-    })
+    const {register, handleSubmit,formState: {errors}} = useForm(
+        {
+            mode: 'onSubmit',
+            reValidateMode: 'onSubmit',
+        });
 
-    const [showNote, setShowNote] = useState(false);
 
-    const addMedia = () => {
-        if (!!media.title && !media.date && !media.image) {
-            alert('Заполните обязательные поля')
-            return
-        }
-
-        api.post("/media/create", media).then((res) => {
-            setShowNote(true)
-            setTimeout(() => {
-                setShowNote(false)
-                clearFields()
-            }, 2000)
-
-        })
+    const addMedia = (data) => {
+        mediaStore.addMedia(data)
     }
 
-    const clearFields = () => {
-        window.location.reload();
-    }
+
 
     return (
         <div>
@@ -50,26 +34,31 @@ const AddMedia = () => {
 
                     <label className="d-flex justify-content-between">
                         Название
-                        <input
-                            className='addnews-input'
-                            value={media.name}
-                            onChange={(e) => setMedia({...media, name: e.target.value})}/>
+                        <div className='d-flex flex-column'>
+
+                            {errors.name &&(
+                                <h6 style={{fontSize:11,color:'red' ,opacity:0.9}}>Слишком короткое название</h6>
+                            )}
+                            <input
+
+                                className='addnews-input'
+                                {...register("name",{minLength:3})}/>
+                        </div>
+
                     </label>
 
                     <label className="d-flex justify-content-between">
                         Дата
                         <input
                             className='addnews-input'
-                            value={media.date}
-                            onChange={(e) => setMedia({...media, date: e.target.value})}/>
+                            {...register("date")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
                         Фото (url)
                         <input
                             className='addnews-input'
-                            value={media.image}
-                            onChange={(e) => setMedia({...media, image: e.target.value})}/>
+                            {...register("image")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
@@ -78,8 +67,7 @@ const AddMedia = () => {
                         </div>
                         <input
                             className='addnews-input'
-                            value={media.all}
-                            onChange={(e) => setMedia({...media, all: e.target.value})}/>
+                            {...register("all")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
@@ -98,8 +86,7 @@ const AddMedia = () => {
                         </div>
                         <input
                             className='addnews-input'
-                            value={media.videoSource}
-                            onChange={(e) => setMedia({...media, videoSource: e.target.value})}/>
+                            {...register("videoSource")}/>
                     </label>
 
                     <label className="d-flex justify-content-between">
@@ -109,19 +96,19 @@ const AddMedia = () => {
 
                         <input
                             className='addnews-input'
-                            value={media.photograph}
-                            onChange={(e) => setMedia({...media, photograph: e.target.value})}/>
+                            {...register("photograph")}/>
                     </label>
 
                 </div>
-                <Button className='col-6 mt-4 ' variant="dark" onClick={addMedia}>Создать</Button>
-                {showNote && (
+                <Button className='col-6 mt-4 ' variant="dark" onClick={handleSubmit(addMedia)}>Создать</Button>
+                {mediaStore.loaderNotification && (
                     <Notification text='Медиа была успешно добавлена' icon='check_circle'/>
                 )}
 
             </div>
         </div>
     );
-};
+});
+
 
 export default AddMedia;

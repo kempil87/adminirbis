@@ -1,32 +1,38 @@
 import React from 'react';
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from 'react';
-import {api} from "../../../base/axios";
+import {useParams} from "react-router-dom";
+import {useEffect} from 'react';
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {useRootStore} from "../../../base/hooks/useRootStore";
+import {useForm} from "react-hook-form";
+import Notification from "../../../components/ui/Notification/Notification";
+import {observer} from "mobx-react";
 
-const EditMedia = () => {
+const EditMedia = observer(() => {
 
     const {id} = useParams()
-    const navigate = useNavigate();
 
-    const [media, setMedia] = useState({});
+    const {mediaStore} = useRootStore()
+    const {register, handleSubmit, setValue} = useForm();
+    console.log(mediaStore.mediaItem)
 
-    const getNews = () => {
-        api.get(`/media/${id}`).then((res) =>{
-            setMedia(res.data)
+    const setFormValues = () =>{
+        Object.keys(mediaStore.mediaItem).forEach((key) => {
+            // @ts-ignore
+            setValue(String(key), mediaStore.mediaItem[key])
         })
     }
 
-    const sendEditMedia = () =>{
-        api.post(`/media/update`, media).then((res) =>{
-            navigate('/media');
+    const getMedia = (id) =>{
+        mediaStore.getMedia(id)
+    }
 
-        })
+    const sendEditMedia = (data) =>{
+        mediaStore.editMedia(data)
     }
 
     useEffect(() => {
-        getNews()
-    }, [id])
+        mediaStore.getMedia(id).then(() => setFormValues())
+    }, [])
 
     return (
         <div className='d-flex align-items-center  pt-5 flex-column '>
@@ -36,24 +42,22 @@ const EditMedia = () => {
                     Название
                     <input
                         className='addnews-input'
-                        value={media.name}
-                        onChange={(e) => setMedia({...media, name: e.target.value})}/>
+                        {...register("name")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
                     Дата
                     <input
+                        type='date'
                         className='addnews-input'
-                        value={media.date}
-                        onChange={(e) => setMedia({...media, date: e.target.value})}/>
+                        {...register("date")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
                     Фото (url)
                     <input
                         className='addnews-input'
-                        value={media.image}
-                        onChange={(e) => setMedia({...media, image: e.target.value})}/>
+                        {...register("image")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
@@ -62,8 +66,7 @@ const EditMedia = () => {
                     </div>
                     <input
                         className='addnews-input'
-                        value={media.all}
-                        onChange={(e) => setMedia({...media, all: e.target.value})}/>
+                        {...register("all")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
@@ -81,8 +84,7 @@ const EditMedia = () => {
                     </div>
                     <input
                         className='addnews-input'
-                        value={media.videoSource}
-                        onChange={(e) => setMedia({...media, videoSource: e.target.value})}/>
+                        {...register("videoSource")}/>
                 </label>
 
                 <label className="d-flex justify-content-between">
@@ -92,14 +94,16 @@ const EditMedia = () => {
 
                     <input
                         className='addnews-input'
-                        value={media.photograph}
-                        onChange={(e) => setMedia({...media, photograph: e.target.value})}/>
+                        {...register("photograph")}/>
                 </label>
 
             </div>
-            <Button className='mt-5 col-4' variant="light" onClick={sendEditMedia}>Сохранить</Button>
+            <Button className='mt-5 col-4' variant="light" onClick={handleSubmit(sendEditMedia)}>Сохранить</Button>
+            {mediaStore.loaderNotification &&(
+                <Notification text='Товар был успешно отредактирован' icon='check_circle'/>
+            )}
         </div>
     );
-};
+});
 
 export default EditMedia;

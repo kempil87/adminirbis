@@ -1,47 +1,29 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {IrbisLoader} from "../../../components/ui/Loaders/IrbisLoader";
-import {ClubCard} from "../../../components/cards/ClubCard/ClubCard";
 import Notification from "../../../components/ui/Notification/Notification";
 import {useEffect, useState} from "react";
-import {api} from "../../../base/axios";
 import {MediaCard} from "../../../components/cards/MediaCard/MediaCard";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../../base/hooks/useRootStore";
 
-const MediaPage = () => {
-    const [media, setMedia] = useState([]);
-    const [loader, setLoader] = useState(true);
-    const [loaderDelete, setLoaderDelete] = useState(false);
+const MediaPage = observer(() => {
+
+
+    const {mediaStore} = useRootStore();
+
     const [searchMedia, setSearchMedia] = useState('');
 
-    const filterMedia = media.filter(media =>{
+    const filterMedia =mediaStore.media.filter(media =>{
         return media.name.toLowerCase().includes(searchMedia.toLowerCase())
     })
-    const getAllMedia = (isDelete) => {
-        api.get('/media').then((res) => {
-            setTimeout(() => {
-                setMedia(res.data.reverse())
-                setLoader(false)
-            }, isDelete ? 0 : 1000)
-        })
-    }
 
     const deleteMedia = (id) => {
-        const res = window.confirm("Вы действительно хотите удалить ?")
-        if (!res) {
-            return
-        }
-
-        setLoaderDelete(true)
-        api.get(`/media/delete/${id}`).then((res) => {
-            getAllMedia(true)
-            setTimeout(() => {
-                setLoaderDelete(false)
-            }, 1800)
-        })
+       mediaStore.deleteMedia(id)
     }
 
     useEffect(() => {
-        getAllMedia(false)
+        mediaStore.getAllMedia()
     }, [])
 
 
@@ -63,13 +45,15 @@ const MediaPage = () => {
                         onChange={(e) =>setSearchMedia(e.target.value)}
                     />
                     {searchMedia &&(
-                        <span onClick={() =>setSearchMedia('')} style={{fontWeight:200,right:0,cursor:"pointer",zIndex:605}} className="material-symbols-outlined position-absolute">clear</span>
+                        <span onClick={() =>setSearchMedia('')}
+                              style={{fontWeight:200,right:0,cursor:"pointer",zIndex:605}}
+                              className="material-symbols-outlined position-absolute">clear</span>
                     )}
                 </form>
 
             </div>
             <div className="d-flex flex-column">
-                {loader ? (
+                {mediaStore.loader ? (
                     <IrbisLoader/>
                 ) : (
                     <>
@@ -88,11 +72,11 @@ const MediaPage = () => {
                 )}
             </div>
 
-            {loaderDelete && (
+            {mediaStore.loaderNotification && (
                 <Notification text='Медиа была успешно удалена' icon='check_circle'/>
             )}
         </div>
     );
-};
+});
 
 export default MediaPage;

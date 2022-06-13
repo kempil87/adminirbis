@@ -1,7 +1,17 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-export const MediaCard = ({all,image,_id,date,name,deleteMedia}) => {
+interface IMediaCard {
+    _id:string
+    date:string
+    name:string
+    image:string
+    all:string
+    deleteMedia: (id: string) => void
+}
+
+
+export const MediaCard = ({all,image,_id,date,name,deleteMedia}: IMediaCard) => {
     return (
         <div  className="d-flex justify-content-between mt-3">
             <div className="d-flex">

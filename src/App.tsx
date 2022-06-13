@@ -10,7 +10,7 @@ import MediaPage from "./pages/main/Media/MediaPage";
 import ShopPage from "./pages/main/Shop/ShopPage";
 import Error from "./components/Error/Error";
 import Auth from "./pages/reg/auth/Auth";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import AddNews from "./pages/main/News/addNews/AddNews";
 import EditNews from "./pages/main/News/editNews/EditNews";
 import AddCLub from "./pages/main/Club/addClub/AddCLub";
