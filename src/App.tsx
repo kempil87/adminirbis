@@ -55,20 +55,20 @@ export const App = observer(() => {
                         <>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/championship" element={<Championship/>}/>
-                            <Route path="/addchampionship" element={<AddChamp/>}/>
-                            <Route path="/editchampionship/:id" element={<EditChamp/>}/>
+                            <Route path="/championship/add" element={<AddChamp/>}/>
+                            <Route path="/championship/edit/:id" element={<EditChamp/>}/>
                             <Route path="/club" element={<ClubPage/>}/>
-                            <Route path="/addclub" element={<AddCLub/>}/>
-                            <Route path="/editclub/:id" element={<EditClub/>}/>
+                            <Route path="/club/add" element={<AddCLub/>}/>
+                            <Route path="/club/edit/:id" element={<EditClub/>}/>
                             <Route path="/news" element={<NewsPage/>}/>
-                            <Route path="/addnews" element={<AddNews/>}/>
-                            <Route path="/editnews/:id" element={<EditNews/>}/>
-                            <Route path="/editmedia/:id" element={<EditMedia/>}/>
-                            <Route path="/addmedia" element={<AddMedia/>}/>
+                            <Route path="/news/add" element={<AddNews/>}/>
+                            <Route path="/news/edit/:id" element={<EditNews/>}/>
+                            <Route path="/media/edit/:id" element={<EditMedia/>}/>
+                            <Route path="/media/add" element={<AddMedia/>}/>
                             <Route path="/media" element={<MediaPage/>}/>
                             <Route path="/shop" element={<ShopPage/>}/>
-                            <Route path="/addshop" element={<AddShop/>}/>
-                            <Route path="/editshop/:id" element={<EditShop/>}/>
+                            <Route path="/shop/add" element={<AddShop/>}/>
+                            <Route path="/shop/edit/:id" element={<EditShop/>}/>
                             <Route path="*" element={<Error/>}/>
                         </>
                     ) : (

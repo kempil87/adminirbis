@@ -38,7 +38,7 @@ export const ShopCard = ({price,badge,salePrice,image,_id,name,deleteShop}:IShop
                     <div style={{fontWeight:300}} className="m-2" >Удалить</div>
                     <span className="material-symbols-outlined ">close</span>
                 </div>
-                <Link  to={`/editshop/${_id}`} style={{ cursor: "pointer",textDecoration:"none",color:"white"}}
+                <Link  to={`/shop/edit/${_id}`} style={{ cursor: "pointer",textDecoration:"none",color:"white"}}
                        className="d-flex align-items-center change-item">
                     <div style={{fontWeight:300}} className="m-2" >Редактировать</div>
                     <span className="material-symbols-outlined ">edit</span>

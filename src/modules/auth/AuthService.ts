@@ -1,5 +1,5 @@
 import AuthApi from "./AuthApi";
-import {IAuthLogin, IAuthLoginResponse} from "./AuthTypes";
+import {IAuthLogin, IAuthLoginResponse, IRegResponse} from "./AuthTypes";
 
 export default class AuthService {
     authApi: AuthApi;
@@ -10,6 +10,11 @@ export default class AuthService {
 
     authLogin = async (loginData: IAuthLogin): Promise<IAuthLoginResponse> => {
         const { data } = await this.authApi.authLogin(loginData);
+        return data;
+    };
+
+    registerUser = async (registerData: IAuthLogin): Promise<IRegResponse> => {
+        const { data } = await this.authApi.registerUser(registerData);
         return data;
     };
 }

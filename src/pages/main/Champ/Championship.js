@@ -47,7 +47,7 @@ const Championship = () => {
         <div className='pt-3'>
 
             <div className="d-flex justify-content-between align-items-center">
-                <Link className="d-flex align-items-center m-2" to="/addchampionship"
+                <Link className="d-flex align-items-center m-2" to="/championship/add"
                       style={{fontWeight: 300, textDecoration: "none", color: "gold"}}>
                     Добавить Матч
                     <span style={{color: "gold"}} className="material-symbols-outlined m-2">add_circle</span>

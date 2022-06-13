@@ -7,3 +7,6 @@ export interface IAuthLoginResponse {
     email: string;
     token: string;
 }
+export interface IRegResponse {
+    message: string;
+}

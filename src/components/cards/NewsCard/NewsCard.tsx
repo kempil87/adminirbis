@@ -18,7 +18,7 @@ const NewsCard = ({image, title, deleteNewsItem, _id, date}: INewsCard) => {
             <div className="news_card d-flex">
                 <div className="img-block">
                     <div className="img-wrap">
-                        <img className="" width="200" height="140" src={image}/>
+                        <img className="" width="200" height="140" src={image} alt='news-image'/>
                     </div>
                 </div>
                 <div style={{marginLeft: 8}} className="">
@@ -36,7 +36,7 @@ const NewsCard = ({image, title, deleteNewsItem, _id, date}: INewsCard) => {
                     <div style={{fontWeight: 300}} className="m-2 ">Удалить</div>
                     <span className="material-symbols-outlined ">close</span>
                 </div>
-                <Link to={`/editnews/${_id}`} style={{cursor: "pointer", textDecoration: "none", color: "white"}}
+                <Link to={`/news/edit/${_id}`} style={{cursor: "pointer", textDecoration: "none", color: "white"}}
                       className="d-flex align-items-center change-item">
                     <div style={{fontWeight: 300}} className="m-2 ">Редактировать</div>
                     <span className="material-symbols-outlined ">edit</span>

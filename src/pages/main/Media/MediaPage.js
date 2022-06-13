@@ -48,7 +48,7 @@ const MediaPage = () => {
     return (
         <div className="pt-3">
             <div className="d-flex justify-content-between align-items-center">
-                <Link className="d-flex align-items-center m-2" to="/addmedia"
+                <Link className="d-flex align-items-center m-2" to="/media/add"
                       style={{fontWeight: 300, textDecoration: "none", color: "gold"}} >
                     Добавить Фото или Видео
                     <span style={{color: "gold"}} className="material-symbols-outlined m-2">add_circle</span>

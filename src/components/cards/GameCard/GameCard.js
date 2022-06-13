@@ -14,6 +14,7 @@ const GameCard = ({league, date, _id, deleteShop,value,place,homeCity,scoreHome,
                         <div className="home-team">
                             <img className="logo-game-prev"
                                  src={homeLogo}
+                                 alt='homeLogo'
                             />
                             <div className="team-name">{homeTeam}</div>
                             <div className="team-city">{homeCity}</div>
@@ -40,6 +41,7 @@ const GameCard = ({league, date, _id, deleteShop,value,place,homeCity,scoreHome,
                         </div>
                         <div className="guest-team">
                             <img className="logo-game-prev"
+                                 alt='guestLogo'
                                  src={guestLogo}
                             />
                             <div className="team-name">{guestTeam}</div>
@@ -54,7 +56,7 @@ const GameCard = ({league, date, _id, deleteShop,value,place,homeCity,scoreHome,
                     <div style={{fontWeight: 300}} className="m-2">Удалить</div>
                     <span className="material-symbols-outlined ">close</span>
                 </div>
-                <Link to={`/editshop/${_id}`} style={{cursor: "pointer", textDecoration: "none", color: "white"}}
+                <Link to={`/shop/edit/${_id}`} style={{cursor: "pointer", textDecoration: "none", color: "white"}}
                       className="d-flex align-items-center change-item">
                     <div style={{fontWeight: 300}} className="m-2">Редактировать</div>
                     <span className="material-symbols-outlined ">edit</span>

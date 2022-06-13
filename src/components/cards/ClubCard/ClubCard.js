@@ -18,7 +18,7 @@ const ClubCard = ({name,position,_id,deleteClub,image}) => {
                     <div style={{fontWeight:300}} className="m-2" >Удалить</div>
                     <span className="material-symbols-outlined ">close</span>
                 </div>
-                <Link  to={`/editclub/${_id}`} style={{ cursor: "pointer",textDecoration:"none",color:"white"}} className="change-item d-flex align-items-center">
+                <Link  to={`/club/edit/${_id}`} style={{ cursor: "pointer",textDecoration:"none",color:"white"}} className="change-item d-flex align-items-center">
                     <div style={{fontWeight:300}} className="m-2" >Редактировать</div>
                     <span className="material-symbols-outlined ">edit</span>
                 </Link>

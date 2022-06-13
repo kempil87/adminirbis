@@ -4,6 +4,7 @@ import {IAuthLogin} from "./AuthTypes";
 
 export class AuthStore {
     loader: boolean = false;
+    loaderNotification: boolean = false;
 
     email: string = "";
     token: string = "";
@@ -35,6 +36,25 @@ export class AuthStore {
         }
     };
 
+    registerUser  = async (data:IAuthLogin) =>{
+        this.setLoading(true)
+        try {
+            const res = await this.authService.registerUser(data)
+            if (res){
+                this.setLoadingNotification(true)
+            }
+        } catch (e){
+            console.log("Error", e);
+        } finally {
+            this.setLoading(false)
+            setTimeout(()=>{
+                this.setLoadingNotification(false)
+            },1800)
+        }
+    }
+
+
+
     logout = () => {
         this.setLoading(true)
 
@@ -51,6 +71,12 @@ export class AuthStore {
     setLoading = (value: boolean) => {
         runInAction(() => {
             this.loader = value;
+        });
+    };
+
+    setLoadingNotification = (value: boolean) => {
+        runInAction(() => {
+            this.loaderNotification = value;
         });
     };
 }

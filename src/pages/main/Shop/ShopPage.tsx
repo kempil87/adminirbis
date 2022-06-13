@@ -23,7 +23,7 @@ const ShopPage = observer(() => {
     return (
             <div className="pt-3 mb-5">
                 <div className="d-flex justify-content-between align-items-center">
-                    <Link className="d-flex align-items-center m-2" to="/addshop"
+                    <Link className="d-flex align-items-center m-2" to="/shop/add"
                           style={{fontWeight: 300, textDecoration: "none", color: "gold"}} >
                         Добавить Товар
                         <span style={{color: "gold"}} className="material-symbols-outlined m-2">add_circle</span>

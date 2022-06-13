@@ -5,4 +5,8 @@ export default class AuthApi {
     authLogin = (data: IAuthLogin) => {
         return api.post("auth/login", data);
     };
+
+    registerUser = (data: IAuthLogin) => {
+        return api.post("auth/register", data);
+    };
 }

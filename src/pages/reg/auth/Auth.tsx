@@ -3,11 +3,16 @@ import "./Auth.css"
 import {Link} from "react-router-dom";
 import {useRootStore} from "../../../base/hooks/useRootStore";
 import {useForm} from "react-hook-form";
+import {observer} from "mobx-react";
 
-const Auth = () => {
+const Auth = observer(() => {
     const {authStore} = useRootStore();
 
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm(
+        {
+            mode: 'onSubmit',
+            reValidateMode: 'onSubmit',
+        });
 
     const authUser = (data: any) => {
         authStore.authLogin(data)
@@ -19,8 +24,12 @@ const Auth = () => {
                 <h4 className="auth-title">Вход</h4>
                 <label className="mt-4 ">
                     <input
-                        className="auth-input"
-                        {...register("email", {min: 4})}
+                        className={errors.email ? "auth-input-war" : "auth-input"}
+                        {...register("email",
+                            {
+                                required:'required',
+                                pattern: /\S+@\S+\.\S+/
+                            })}
                         placeholder="Почта"
                         type="email"
                     />
@@ -35,8 +44,10 @@ const Auth = () => {
                 </label>
 
                 <label className="mt-3 ">
-                    <input className="auth-input" placeholder="Пароль" type="password"
-                           {...register("password", {min: 6})}/>
+                    <input className={errors.password ? "auth-input-war" : "auth-input"}
+                           placeholder="Пароль"
+                           type="password"
+                           {...register("password", {minLength: 6})}/>
 
                     {errors.password && (
                         <h6 className='warning-auth d-flex align-items-center'>
@@ -51,6 +62,6 @@ const Auth = () => {
             </div>
         </div>
     );
-};
+});
 
 export default Auth;

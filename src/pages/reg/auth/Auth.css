@@ -10,6 +10,7 @@
 .auth {
     /*background-image: url("https://xn--m1agla.xn--p1ai/wp-content/uploads/2021/12/Irbis-111x128.png");*/
     font-family: 'Montserrat', sans-serif;
+
     height: 84vh;
     display: flex;
     align-items: center;
@@ -33,8 +34,12 @@
 }
 .warning-auth{
     color: #cc0909;
-    font-size: 12px;
+    font-size: 11px;
     margin-top: 6px;
+    max-width: 280px;
+}
+.warning-auth span{
+    margin-right: 8px;
 }
 
 .auth-btn {

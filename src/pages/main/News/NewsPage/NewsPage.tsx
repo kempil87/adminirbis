@@ -24,7 +24,7 @@ const NewsPage = observer(() => {
             <div className="d-flex justify-content-between align-items-center">
                 <h4 className="m-0">Все новости</h4>
                 <div className='d-flex'>
-                    <Link className="d-flex align-items-center m-2" to="/addnews"
+                    <Link className="d-flex align-items-center m-2" to="/news/add"
                           style={{fontWeight: 300, textDecoration: "none", color: "gold"}}>
                         Добавить новость
                         <span style={{color: "gold"}} className="material-symbols-outlined m-2">add_circle</span>
