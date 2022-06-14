@@ -16,7 +16,7 @@ const NewsPage = observer(() => {
     })
 
     useEffect(() => {
-        newsStore.getNews()
+        newsStore.getAllNews()
     }, [])
 
     return (

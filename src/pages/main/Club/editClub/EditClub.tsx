@@ -1,63 +1,40 @@
-import React, {useEffect} from 'react';
-import './AddClub.css'
-import {Link} from "react-router-dom";
+import React from 'react';
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect} from "react";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
 import Notification from "../../../../components/ui/Notification/Notification";
-import {useState} from "react";
-import {api} from "../../../../base/axios";
+import {useRootStore} from "../../../../base/hooks/useRootStore";
+import {useForm} from "react-hook-form";
+import {observer} from "mobx-react";
 
-const AddCLub = () => {
+const EditClub = observer(() => {
 
-    const [club, setClub] = useState({
-        name: "",
-        number: "",
-        image: "",
-        mainImage: "",
-        position: "",
-        job: "",
-        dateBirthday: "",
-        height: "",
-        weight: "",
-        country: "",
-        grip: "",
-        games: "",
-        goals: "",
-        assist: "",
-        score: "",
-        boxTime: "",
-        plusMinus: "",
-        wins: "",
-        saves: "",
-        safety: "",
-        dryGames: "",
-        personalInfo: "",
-        shortPersonalInfo: ""
-    })
-    const [showNote, setShowNote] = useState(false);
+    const {id} = useParams()
+    const {clubStore} = useRootStore();
 
-    const addClub = () => {
-        api.post("/club/create", club).then((res) => {
-            setShowNote(true)
-            setTimeout(() => {
-                setShowNote(false)
-                // clearFields()
-            }, 2000)
+    const {register, handleSubmit,setValue} = useForm();
+    const navigate = useNavigate();
 
+    const setFormValues = () =>{
+        Object.keys(clubStore.clubItem).forEach((key) => {
+            // @ts-ignore
+            setValue(String(key), clubStore.clubItem[key])
         })
     }
-    const clearFields = () => {
-        window.location.reload();
+
+    const sendEditClub = (data) => {
+        clubStore.editClub(data)
+        setTimeout(() => {
+            navigate('/club');
+        },1900)
     }
 
-
-
+    useEffect(() => {
+        clubStore.getClub(id).then(() => setFormValues())
+    }, [])
 
     return (
         <div>
-            <div className="align-items-center d-flex back-link">
-                <span className="material-symbols-outlined chevron_right">chevron_right</span>
-                <Link to="/club" className="back">Назад</Link>
-            </div>
             <div className="d-flex flex-column  align-items-center pt-5">
 
                 <div className="d-flex  input-container">
@@ -66,31 +43,27 @@ const AddCLub = () => {
                             Имя Фамилия
                             <input
                                 className='addnews-input'
-                                value={club.name}
-                                onChange={(e) => setClub({...club, name: e.target.value})}/>
+                                {...register("name")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
                             Номер
                             <input
                                 className='addnews-input'
-                                value={club.number}
-                                onChange={(e) => setClub({...club, number: e.target.value})}/>
+                                {...register("number")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
                             Фото с матча(url)
                             <input
                                 className='addnews-input'
-                                value={club.image}
-                                onChange={(e) => setClub({...club, image: e.target.value})}/>
+                                {...register("image")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Фото лица(url)
                             <input
                                 className='addnews-input'
-                                value={club.mainImage}
-                                onChange={(e) => setClub({...club, mainImage: e.target.value})}/>
+                                {...register("mainImage")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
@@ -106,8 +79,7 @@ const AddCLub = () => {
                         </OverlayTrigger>
                             <input
                                 className='addnews-input'
-                                value={club.position}
-                                onChange={(e) => setClub({...club, position: e.target.value})}/>
+                                {...register("position")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
@@ -125,45 +97,39 @@ const AddCLub = () => {
                             </OverlayTrigger>
                             <input
                                 className='addnews-input'
-                                value={club.job}
-                                onChange={(e) => setClub({...club, job: e.target.value})}/>
+                                {...register("job")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
                             Дата рождения
                             <input
                                 className='addnews-input'
-                                value={club.dateBirthday}
-                                onChange={(e) => setClub({...club, dateBirthday: e.target.value})}/>
+                                {...register("dateBirthday")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
                             Рост
                             <input
                                 className='addnews-input'
-                                value={club.height}
-                                onChange={(e) => setClub({...club, height: e.target.value})}/>
+                                {...register("height")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Вес
                             <input
                                 className='addnews-input'
-                                value={club.weight}
-                                onChange={(e) => setClub({...club, weight: e.target.value})}/>
+                                {...register("weight")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Страна
                             <input
                                 className='addnews-input'
-                                value={club.country}
-                                onChange={(e) => setClub({...club, country: e.target.value})}/>
+                                {...register("country")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Хват
                             <input
                                 className='addnews-input'
-                                value={club.grip}
-                                onChange={(e) => setClub({...club, grip: e.target.value})}/>
+                                {...register("grip")}/>
                         </label>
 
                     </div>
@@ -172,98 +138,86 @@ const AddCLub = () => {
                             Игры
                             <input
                                 className='addnews-input'
-                                value={club.games}
-                                onChange={(e) => setClub({...club, games: e.target.value})}/>
+                                {...register("games")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Голы
                             <input
                                 className='addnews-input'
-                                value={club.goals}
-                                onChange={(e) => setClub({...club, goals: e.target.value})}/>
+                                {...register("goals")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Передачи
                             <input
                                 className='addnews-input'
-                                value={club.assist}
-                                onChange={(e) => setClub({...club, assist: e.target.value})}/>
+                                {...register("assist")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Очки
                             <input
                                 className='addnews-input'
-                                value={club.score}
-                                onChange={(e) => setClub({...club, score: e.target.value})}/>
+                                {...register("score")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Штр.время
                             <input
                                 className='addnews-input'
-                                value={club.boxTime}
-                                onChange={(e) => setClub({...club, boxTime: e.target.value})}/>
+                                {...register("boxTime")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Плюс/минус
                             <input
                                 className='addnews-input'
-                                value={club.plusMinus}
-                                onChange={(e) => setClub({...club, plusMinus: e.target.value})}/>
+                                {...register("plusMinus")}/>
                         </label>
 
                         <label className="d-flex justify-content-between">
                             Победы(вр)
                             <input
                                 className='addnews-input'
-                                value={club.wins}
-                                onChange={(e) => setClub({...club, wins: e.target.value})}/>
+                                {...register("wins")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Сейвы(вр)
                             <input
                                 className='addnews-input'
-                                value={club.saves}
-                                onChange={(e) => setClub({...club, saves: e.target.value})}/>
+                                {...register("saves")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Коэф.надежности(вр)
                             <input
                                 className='addnews-input'
-                                value={club.safety}
-                                onChange={(e) => setClub({...club, safety: e.target.value})}/>
+                                {...register("safety")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Сухие игры(вр)
                             <input
                                 className='addnews-input'
-                                value={club.dryGames}
-                                onChange={(e) => setClub({...club, dryGames: e.target.value})}/>
+                                {...register("dryGames")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Перс.информация
                             <input
                                 className='addnews-input'
-                                value={club.personalInfo}
-                                onChange={(e) => setClub({...club, personalInfo: e.target.value})}/>
+                                {...register("personalInfo")}/>
                         </label>
                         <label className="d-flex justify-content-between">
                             Краткая перс.информация
                             <input
                                 className='addnews-input'
-                                value={club.shortPersonalInfo}
-                                onChange={(e) => setClub({...club, shortPersonalInfo: e.target.value})}/>
+                                {...register("shortPersonalInfo")}/>
                         </label>
                     </div>
                 </div>
-                <Button className='col-3 mt-4 border-light' variant="dark" onClick={addClub}>Создать</Button>
-                <Button className='col-3 mt-2 border-light' variant="dark" onClick={clearFields}>Очистить</Button>
-                {showNote && (
-                    <Notification text='Игрок был успешно добавлен' icon='check_circle'/>
-                )}
 
+                <Button variant="light col-4" onClick={handleSubmit(sendEditClub)}>Сохранить</Button>
+                {clubStore.loaderNotification && (
+                    <Notification text="Успешно отредактировано" icon='check_circle'/>
+                )}
             </div>
+
         </div>
     );
-};
+});
 
-export default AddCLub;
+export default EditClub;

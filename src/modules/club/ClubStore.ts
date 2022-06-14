@@ -1,29 +1,28 @@
 import {makeAutoObservable, runInAction} from "mobx";
-import NewsService from "./NewsService";
-import {INews} from "./NewsTypes";
-import {IShop} from "../shop/ShopTypes";
+import ClubService from "./ClubService";
+import {IClub} from "./ClubTypes";
 
-export class NewsStore {
+export class ClubStore {
     loader: boolean = false;
     loaderNotification: boolean = false;
 
-    news: INews[] = [];
-    newsItem: INews | null = null;
+    allClub: IClub[] = [];
+    clubItem: IClub | null = null;
 
-    private newsService: NewsService;
+    private clubService: ClubService;
 
     constructor() {
         makeAutoObservable(this);
-        this.newsService = new NewsService();
+        this.clubService = new ClubService();
     }
 
-    getAllNews = async () => {
+    getAllClub = async () => {
         this.setLoading(true)
 
         try {
-            const res = await this.newsService.getAllNews();
+            const res = await this.clubService.getAllClub();
             runInAction(() => {
-                this.news = res;
+                this.allClub = res;
             });
         } catch (e) {
             console.log("Error", e);
@@ -32,34 +31,19 @@ export class NewsStore {
         }
     };
 
-    getNews = async (id:string) => {
-        this.setLoading(true)
-
-        try {
-            const res = await this.newsService.getNews(id);
-            runInAction(() => {
-                this.newsItem = res;
-            });
-        } catch (e) {
-            console.log("Error", e);
-        } finally {
-            this.setLoading(false);
-        }
-    };
-
-    deleteNews = async (id: string) =>{
-        const res = window.confirm("Вы действительно хотите удалить новость?")
+    deleteClub = async (id: string) => {
+        const res = window.confirm("Вы действительно хотите удалить ?")
         if (!res) {
             return
         }
 
         try {
-            const res = await this.newsService.deleteNews(id);
+            const res = await this.clubService.deleteClub(id);
 
             if (res) {
                 this.setLoadingNotification(true)
                 runInAction(() => {
-                    this.news = this.news.filter((n) => n._id !== id);
+                    this.allClub = this.allClub.filter((n) => n._id !== id);
                 });
             }
         } catch (e) {
@@ -71,27 +55,27 @@ export class NewsStore {
         }
     }
 
-    addNews = async (data: INews) => {
-
+    addClub = async (data: IClub) => {
         try {
-            const res = await this.newsService.addNews(data);
+            const res = await this.clubService.addClub(data);
 
-            if (res){
-                this.getAllNews()
+            if (res) {
                 this.setLoadingNotification(true)
+                this.getAllClub()
             }
         } catch (e) {
             console.log("Error", e);
         } finally {
             setTimeout(() => {
+                window.location.reload();
                 this.setLoadingNotification(false);
             }, 1800)
         }
-    };
+    }
 
-    editNews = async (data: INews) => {
+    editClub = async (data: IClub) => {
         try {
-            const res = await this.newsService.editNews(data);
+            const res = await this.clubService.editClub(data);
 
             if (res) {
                 this.setLoadingNotification(true)
@@ -101,10 +85,24 @@ export class NewsStore {
         } finally {
             setTimeout(() => {
                 this.setLoadingNotification(false);
-
             }, 1800)
         }
     }
+
+    getClub = async (id: string) => {
+        this.setLoading(true)
+
+        try {
+            const res = await this.clubService.getClub(id);
+            runInAction(() => {
+                this.clubItem = res;
+            });
+        } catch (e) {
+            console.log("Error", e);
+        } finally {
+            this.setLoading(false);
+        }
+    };
 
     setLoading = (value: boolean) => {
         runInAction(() => {

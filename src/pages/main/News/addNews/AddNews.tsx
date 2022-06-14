@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
 import Notification from "../../../../components/ui/Notification/Notification";
 import "./AddNews.css"
@@ -6,9 +6,10 @@ import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {observer} from "mobx-react";
 import {useRootStore} from "../../../../base/hooks/useRootStore";
+import {api} from "../../../../base/axios";
 
 const AddNews = observer(() => {
-
+const [clubLink,setClubLink] = useState([])
     const {newsStore} = useRootStore();
 
     const {register, handleSubmit, reset} = useForm();
@@ -17,17 +18,11 @@ const AddNews = observer(() => {
         newsStore.addNews(data).then(() => reset())
     }
 
-
-    // const getClub = () => {
-    //     api.get("/club").then((res) => {
-    //         setCl(res.data)
-    //     })
-    // }
-
-    //
-    // useEffect(() => {
-    //     getClub()
-    // }, [])
+    useEffect(() => {
+        api.get("/club").then((res) => {
+            setClubLink(res.data)
+        })
+    }, [])
 
     return (
         <>
@@ -132,18 +127,18 @@ const AddNews = observer(() => {
 
             </div>
 
-            {/*<div>*/}
-            {/*    <h5>Список ссылок</h5>*/}
-            {/*    <div>*/}
-            {/*        {cl.map((i)=>(*/}
-            {/*            <div key={i._id} className="d-flex id-list">*/}
-            {/*                <h6>{i.name}</h6>*/}
-            {/*                <h6>: {i._id}</h6>*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </div>*/}
+            <div>
+                <h5>Список ссылок</h5>
+                <div>
+                    {clubLink.map((i)=>(
+                        <div key={i._id} className="d-flex id-list">
+                            <h6>{i.name}</h6>
+                            <h6>: {i._id}</h6>
+                        </div>
+                    ))}
+                </div>
 
-            {/*</div>*/}
+            </div>
         </>
 
     );

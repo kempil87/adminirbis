@@ -8,13 +8,22 @@ export default class NewsService {
         this.newsApi = new NewsApi();
     }
 
-    getNews = async (): Promise<INews[]> => {
-        const { data } = await this.newsApi.getNews();
+    getAllNews = async (): Promise<INews[]> => {
+        const { data } = await this.newsApi.getAllNews();
         return data.reverse();
+    };
+    getNews = async (id): Promise<INews> => {
+        const { data } = await this.newsApi.getNews(id);
+        return data;
     };
 
     deleteNews = async (id: string): Promise<INewsResponse> => {
         const { data } = await this.newsApi.deleteNews(id);
+        return data;
+    };
+
+    editNews = async (newsData): Promise<INewsResponse> => {
+        const { data } = await this.newsApi.editNews(newsData);
         return data;
     };
 

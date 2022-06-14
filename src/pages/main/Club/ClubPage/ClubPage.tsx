@@ -1,50 +1,24 @@
 import React from 'react';
 import './ClubPage.css'
 import {useEffect, useState} from "react";
-import {api} from "../../../../base/axios";
 import {Link} from "react-router-dom";
 import Notification from "../../../../components/ui/Notification/Notification";
 import {IrbisLoader} from "../../../../components/ui/Loaders/IrbisLoader";
 import ClubCard from "../../../../components/cards/ClubCard/ClubCard";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../../../base/hooks/useRootStore";
 
-const ClubPage = () => {
-    const [club, setClub] = useState([]);
-    const [loader, setLoader] = useState(true);
-    const [loaderDelete, setLoaderDelete] = useState(false);
+const ClubPage = observer(() => {
     const [searchClub, setSearchClub] = useState('');
-    
-    const filterClub = club.filter(club =>{
+    const {clubStore} = useRootStore();
+
+    const filterClub = clubStore.allClub.filter(club =>{
             return club.name.toLowerCase().includes(searchClub.toLowerCase())
         })
 
-    
-
-    const getAllCLub = (isDelete) => {
-        api.get('/club').then((res) => {
-            setTimeout(() => {
-                setClub(res.data.reverse())
-                setLoader(false)
-            }, isDelete ? 0 : 1000)
-        })
-    }
-
-    const deleteClub = (id) => {
-        const res = window.confirm("Вы действительно хотите удалить ?")
-        if (!res) {
-            return
-        }
-
-        setLoaderDelete(true)
-        api.get(`/club/delete/${id}`).then((res) => {
-            getAllCLub(true)
-            setTimeout(() => {
-                setLoaderDelete(false)
-            }, 1800)
-        })
-    }
 
     useEffect(() => {
-        getAllCLub(false)
+        clubStore.getAllClub()
     }, [])
 
 
@@ -72,7 +46,7 @@ const ClubPage = () => {
 
             </div>
             <div className="d-flex flex-column">
-                {loader ? (
+                {clubStore.loader ? (
                     <IrbisLoader/>
                 ) : (
                     <>
@@ -82,7 +56,7 @@ const ClubPage = () => {
                                 name={c.name}
                                 image={c.image}
                                 _id={c._id}
-                                deleteClub={(id) => deleteClub(id)}
+                                deleteClub={(id) => clubStore.deleteClub(id)}
                                 position={c.position}
                             />
                         ))}
@@ -90,10 +64,10 @@ const ClubPage = () => {
                 )}
             </div>
 
-            {loaderDelete && (
+            {clubStore.loaderNotification && (
                 <Notification text='Игрок был успешно удален' icon='check_circle'/>
             )}
         </div>
     );
-};
+});
 export default ClubPage;

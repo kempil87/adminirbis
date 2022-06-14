@@ -2,8 +2,12 @@ import {api} from "../../base/axios"
 import {INews} from "./NewsTypes";
 
 export default class NewsApi {
-    getNews = () => {
+    getAllNews = () => {
         return api.get("/news",);
+    };
+
+    getNews = (id:string) => {
+        return api.get(`/news/${id}`,);
     };
 
     deleteNews = (id: string) => {
@@ -12,5 +16,9 @@ export default class NewsApi {
 
     addNews = (data: INews) => {
         return api.post(`/news/create`,data);
+    };
+
+    editNews = (data: INews) => {
+        return api.post(`/news/update`,data);
     };
 }

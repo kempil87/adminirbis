@@ -1,7 +1,15 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const ClubCard = ({name,position,_id,deleteClub,image}) => {
+interface IClubCard {
+    name:string
+    position:string
+    _id:string
+    deleteClub : (id: string) => void
+    image:string
+}
+
+const ClubCard = ({name,position,_id,deleteClub,image}:IClubCard) => {
 
     return (
         <div  className="d-flex justify-content-between mt-3">

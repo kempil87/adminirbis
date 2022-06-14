@@ -4,100 +4,102 @@ import {useEffect, useState} from "react";
 import {api} from "../../../../base/axios";
 import {Button} from "react-bootstrap";
 import {useNavigate} from 'react-router-dom';
+import {useRootStore} from "../../../../base/hooks/useRootStore";
+import {useForm} from "react-hook-form";
+import Notification from "../../../../components/ui/Notification/Notification";
+import {observer} from "mobx-react";
 
-const EditNews = () => {
+const EditNews = observer(() => {
     const {id} = useParams()
-
+    const {newsStore} = useRootStore()
     const navigate = useNavigate();
 
-    const [news, setNews] = useState({});
+    const {register, handleSubmit, setValue} = useForm();
 
-    const getNews = () => {
-        api.get(`/news/${id}`).then((res) => {
-            setNews(res.data)
+    const setFormValues = () => {
+        Object.keys(newsStore.newsItem).forEach((key) => {
+            // @ts-ignore
+            setValue(String(key), newsStore.newsItem[key])
         })
     }
 
-    const sendEditNews = () => {
-        api.post(`/news/update`, news).then((res) => {
-            navigate('/news');
-        })
+    const sendEditNews = (data) => {
+        newsStore.editNews(data)
+        setTimeout(() => {
+            navigate('/news')
+        }, 1900)
     }
 
     useEffect(() => {
-        getNews()
-    }, [id])
+        newsStore.getNews(id).then(() => setFormValues())
+    }, [])
+
 
     return (
 
         <div className="d-flex align-items-center  pt-5 flex-column ">
             <div className="w-50">
                 <label className="d-flex  justify-content-between">
-                   Название
+                    Название
                     <input
                         className='addnews-input'
-                        value={news.title}
-                        onChange={(e) => setNews({...news, title: e.target.value})}/>
+                        {...register("title")}/>
                 </label>
 
                 <label className="d-flex  justify-content-between">
                     Дата
                     <input
                         className='addnews-input'
-                        value={news.date}
-                        onChange={(e) => setNews({...news, date: e.target.value})}/>
+                        {...register("date")}/>
                 </label>
 
                 <label className="d-flex  justify-content-between">
                     Картинка (url)
                     <input
                         className='addnews-input'
-                        value={news.image}
-                        onChange={(e) => setNews({...news, image: e.target.value})}/>
+                        {...register("image")}/>
                 </label>
 
                 <label className="d-flex  justify-content-between">
                     Значок
                     <input
                         className='addnews-input'
-                        value={news.badge}
-                        onChange={(e) => setNews({...news, badge: e.target.value})}/>
+                        {...register("badge")}/>
                 </label>
 
                 <label className="d-flex  justify-content-between">
                     Ссылка
                     <input
                         className='addnews-input'
-                        value={news.source}
-                        onChange={(e) => setNews({...news, source: e.target.value})}/>
+                        {...register("source")}/>
                 </label>
 
                 <label className="d-flex  justify-content-between">
                     Тег
                     <input
                         className='addnews-input'
-                        value={news.tag}
-                        onChange={(e) => setNews({...news, tag: e.target.value})}/>
+                        {...register("tag")}/>
                 </label>
 
                 <label className="d-flex justify-content-between ">
                     Описание
                     <input
                         className='addnews-input'
-                        value={news.subtitle}
-                        onChange={(e) => setNews({...news, subtitle: e.target.value})}/>
+                        {...register("subtitle")}/>
                 </label>
                 <label className="d-flex justify-content-between ">
                     крат.Описание
                     <input
                         className='addnews-input'
-                        value={news.shortSubTitle}
-                        onChange={(e) => setNews({...news, shortSubTitle: e.target.value})}/>
+                        {...register("shortSubTitle")}/>
                 </label>
-                <Button className='mt-5  ' variant="light" onClick={sendEditNews}>Сохранить</Button>
+                <Button className='mt-5  ' variant="light" onClick={handleSubmit(sendEditNews)}>Сохранить</Button>
+                {newsStore.loaderNotification && (
+                    <Notification text='Товар был успешно отредактирован' icon='check_circle'/>
+                )}
             </div>
         </div>
     );
-};
+});
 
 export default EditNews;

@@ -21,7 +21,7 @@ const ShopPage = observer(() => {
     }, [])
 
     return (
-            <div className="pt-3 mb-5">
+            <div className="pt-3 pb-5">
                 <div className="d-flex justify-content-between align-items-center">
                     <Link className="d-flex align-items-center m-2" to="/shop/add"
                           style={{fontWeight: 300, textDecoration: "none", color: "gold"}} >
