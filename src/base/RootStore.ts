@@ -4,6 +4,7 @@ import {NewsStore} from "../modules/news/NewsStore";
 import {ShopStore} from "../modules/shop/ShopStore";
 import {MediaStore} from "../modules/media/MediaStore";
 import {ClubStore} from "../modules/club/ClubStore";
+import {ChampionshipStore} from "../modules/championship/ChampionshipStore";
 
 class RootStore {
     authStore: AuthStore;
@@ -11,6 +12,7 @@ class RootStore {
     shopStore: ShopStore;
     mediaStore: MediaStore;
     clubStore: ClubStore;
+    championshipStore: ChampionshipStore;
 
     constructor() {
         this.authStore = new AuthStore();
@@ -18,6 +20,7 @@ class RootStore {
         this.shopStore = new ShopStore();
         this.mediaStore = new MediaStore();
         this.clubStore = new ClubStore();
+        this.championshipStore = new ChampionshipStore();
     }
 
     sync = async () => {
