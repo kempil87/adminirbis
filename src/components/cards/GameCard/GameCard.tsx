@@ -50,10 +50,12 @@ const GameCard = ({league, date, _id, deleteShop, value, place, homeCity, scoreH
                                 <div className="d-flex flex-column game-link">
                                     <span className="material-symbols-outlined">photo_camera</span>
                                     <h6>Фото</h6>
+                                    <h6>{photo}</h6>
                                 </div>
                                 <div className="d-flex flex-column game-link">
                                     <span className="material-symbols-outlined">live_tv</span>
                                     <h6>Трансляция</h6>
+                                    <h6>{video}</h6>
                                 </div>
                             </div>
                         </div>
