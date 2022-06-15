@@ -1,6 +1,6 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import ChampionshipService from "./ChampionshipService";
-import {IChamp} from "./ChampionshipTypes";
+import {IChamp, ITeam} from "./ChampionshipTypes";
 
 export class ChampionshipStore {
     loader: boolean = false;
@@ -8,6 +8,8 @@ export class ChampionshipStore {
 
     allChamp: IChamp[] = [];
     champItem: IChamp | null = null;
+    table: ITeam[] = [];
+
 
     private championshipService: ChampionshipService;
 
@@ -103,6 +105,79 @@ export class ChampionshipStore {
             this.setLoading(false);
         }
     };
+
+    createTeam = async (data: ITeam) => {
+        try {
+            const res = await this.championshipService.createTeam(data);
+            if (res) {
+                console.log(res)
+            }
+        } catch (e) {
+            console.log("Error", e);
+        } finally {
+            setTimeout(() => {
+                window.location.reload();
+                this.setLoadingNotification(false);
+            }, 1800)
+        }
+    }
+
+    getTables = async () => {
+        this.setLoading(true)
+
+        try {
+            const res = await this.championshipService.getTables();
+
+            runInAction(() => {
+                this.table = res;
+            });
+        } catch (e) {
+            console.log("Error", e);
+        } finally {
+            this.setLoading(false);
+        }
+    };
+
+    editTableItem = async (data: ITeam) => {
+        try {
+            const res = await this.championshipService.editTableItem(data);
+
+            if (res) {
+                this.getTables()
+                this.setLoadingNotification(true)
+            }
+        } catch (e) {
+            console.log("Error", e);
+        } finally {
+            setTimeout(() => {
+                this.setLoadingNotification(false);
+            }, 1800)
+        }
+    }
+
+    deleteTableItem = async (id: string) => {
+        const res = window.confirm("Вы действительно хотите удалить ?")
+        if (!res) {
+            return
+        }
+
+        try {
+            const res = await this.championshipService.deleteTableItem(id);
+
+            if (res) {
+                this.setLoadingNotification(true)
+                runInAction(() => {
+                    this.table = this.table.filter((n) => n._id !== id);
+                });
+            }
+        } catch (e) {
+            console.log("Error", e);
+        } finally {
+            setTimeout(() => {
+                this.setLoadingNotification(false);
+            }, 1800)
+        }
+    }
 
     setLoading = (value: boolean) => {
         runInAction(() => {

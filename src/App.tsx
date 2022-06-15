@@ -10,7 +10,7 @@ import MediaPage from "./pages/main/Media/MediaPage";
 import ShopPage from "./pages/main/Shop/ShopPage";
 import Error from "./components/Error/Error";
 import Auth from "./pages/reg/auth/Auth";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import AddNews from "./pages/main/News/addNews/AddNews";
 import EditNews from "./pages/main/News/editNews/EditNews";
 import AddCLub from "./pages/main/Club/addClub/AddCLub";
@@ -24,8 +24,13 @@ import AddChamp from "./pages/main/Champ/AddChamp";
 import EditChamp from "./pages/main/Champ/EditChamp";
 import {useRootStore} from "./base/hooks/useRootStore";
 import {observer} from "mobx-react";
+import AddTableClub from "./pages/main/Champ/AddTableClub";
+import EditTable from "./pages/main/Champ/EditTable";
 
 export const App = observer(() => {
+
+    const [theme, setTheme] = useState(false)
+
     const {authStore} = useRootStore();
 
     const isAuth = () => {
@@ -43,17 +48,23 @@ export const App = observer(() => {
         isAuth()
     }, [authStore.token])
 
+    const changeTheme = () => {
+        setTheme(!theme)
+    }
+
     return (
-        <div className="App ">
+        <div className={!theme ? 'App' : 'App-light'}>
             {authStore.token && (
-                <Header/>
+                <Header theme={theme} setTheme={changeTheme}/>
             )}
 
-            <div className="container" style={{marginTop:authStore.token ? 76 :0, minHeight: "100vh"}}>
+            <div className="container" style={{marginTop: authStore.token ? 76 : 0, minHeight: "100vh"}}>
                 <Routes>
                     {authStore.token ? (
                         <>
                             <Route path="/" element={<Home/>}/>
+                            <Route path="/championship/table" element={<AddTableClub/>}/>
+                            <Route path="/championship/table/edit" element={<EditTable/>}/>
                             <Route path="/championship" element={<Championship/>}/>
                             <Route path="/championship/add" element={<AddChamp/>}/>
                             <Route path="/championship/edit/:id" element={<EditChamp/>}/>

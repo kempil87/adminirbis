@@ -24,6 +24,7 @@ export default class ClubService {
     };
     editClub = async (clubData): Promise<IClubResponse> => {
         const { data } = await this.clubApi.editClub(clubData);
+        console.log(2222, data)
         return data;
     };
 

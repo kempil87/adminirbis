@@ -13,7 +13,23 @@ export interface IChamp {
     video: string
     league: string
     place: string
-    _id:string
+    _id: string
+}
+
+export interface ITeam {
+    wins: number
+    games: number
+    score: number
+    goalBall: number
+    missBall: number
+    loss: number
+    winsOverTime: number
+    loseOverTime: number
+    league: string
+    season: string
+    nameTeam: string
+    logoTeam: string
+    _id: string
 }
 
 export interface IClubResponse {
