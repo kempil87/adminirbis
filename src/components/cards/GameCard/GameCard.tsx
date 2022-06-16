@@ -46,18 +46,7 @@ const GameCard = ({league, date, _id, deleteShop, value, place, homeCity, scoreH
                             <div className="game-score">{scoreHome} : {scoreGuest}</div>
                             <div className="game-league">{league}</div>
                             <div className="game-place">{place}</div>
-                            <div className="game-link-wrap">
-                                <div className="d-flex flex-column game-link">
-                                    <span className="material-symbols-outlined">photo_camera</span>
-                                    <h6>Фото</h6>
-                                    <h6>{photo}</h6>
-                                </div>
-                                <div className="d-flex flex-column game-link">
-                                    <span className="material-symbols-outlined">live_tv</span>
-                                    <h6>Трансляция</h6>
-                                    <h6>{video}</h6>
-                                </div>
-                            </div>
+                            <div className="game-link-wrap"/>
                         </div>
                         <div className="guest-team">
                             <img className="logo-game-prev"
@@ -77,7 +66,7 @@ const GameCard = ({league, date, _id, deleteShop, value, place, homeCity, scoreH
                     <div style={{fontWeight: 300}} className="m-2">Удалить</div>
                     <span className="material-symbols-outlined ">close</span>
                 </div>
-                <Link to={`/shop/edit/${_id}`} style={{cursor: "pointer", textDecoration: "none", color: "white"}}
+                <Link to={`/championship/edit/${_id}`} style={{cursor: "pointer", textDecoration: "none", color: "white"}}
                       className="d-flex align-items-center change-item">
                     <div style={{fontWeight: 300}} className="m-2">Редактировать</div>
                     <span className="material-symbols-outlined ">edit</span>

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
+import './EditTable.css'
 import {observer} from "mobx-react";
 import {useRootStore} from "../../../base/hooks/useRootStore";
 import {useForm} from "react-hook-form";
 import Notification from "../../../components/ui/Notification/Notification";
+import {Link} from "react-router-dom";
 
 const EditTable = observer(() => {
     const {championshipStore} = useRootStore()
@@ -12,9 +14,9 @@ const EditTable = observer(() => {
     const [activeTeamId, setActiveTeamId] = useState<string | null>(null)
 
     const setFormValues = () => {
-        if(activeTeamId){
+        if (activeTeamId) {
             const currentTeam = {...championshipStore.table.find((i) => i._id === activeTeamId)}
-            if(currentTeam){
+            if (currentTeam) {
                 Object.keys(currentTeam).forEach((key) => {
                     // @ts-ignore
                     setValue(String(key), currentTeam[key])
@@ -24,11 +26,11 @@ const EditTable = observer(() => {
     }
 
     const sendEditTable = (data) => {
-        const dataWithId = {...data,_id:activeTeamId}
+        const dataWithId = {...data, _id: activeTeamId}
         championshipStore.editTableItem(dataWithId)
     }
 
-    const deleteTable = (id: string) =>{
+    const deleteTable = (id: string) => {
         championshipStore.deleteTableItem(id)
     }
 
@@ -42,8 +44,12 @@ const EditTable = observer(() => {
 
 
     return (
-        <div>
-            <Table style={{zIndex: 100}} striped bordered hover variant="dark">
+        <div className='pt-5 pb-5'>
+            <div className="align-items-center d-flex back-link mb-2">
+                <span className="material-symbols-outlined chevron_right">chevron_right</span>
+                <Link to="/championship" className="back">Назад</Link>
+            </div>
+            <Table  striped bordered hover variant="dark">
                 <thead>
                 <tr>
                     <th>№</th>
@@ -61,102 +67,133 @@ const EditTable = observer(() => {
                 <tbody>
                 {championshipStore.table
                     .slice()
-                    .sort((a,b) => b.score - a.score)
+                    .sort((a, b) => b.score - a.score)
                     .map((item, idx) => (
-                    <tr key={item._id}>
-                        <td>{idx + 1}
-                            <span onClick={() => setActiveTeamId(item._id)}
-                                  className="material-symbols-outlined ">edit</span>
-                        </td>
-                        <td className="d-flex align-items-center">
-                            <img className="logo-table " width='60' alt='logo'
-                                 src={item.logoTeam}
-                            />
-                            {item._id !== activeTeamId ? (
-                                <div style={{fontSize: 14}} className="d-none d-lg-block">{item.nameTeam}</div>
-                            ) : (
-                                <input style={{width: 40}} {...register("nameTeam")}/>
-                            )}
-
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.games}</div>
-                            ) : (
-                                <input style={{width: 40}} {...register("games")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.wins}</div>
-                            ) : (
-                                <input style={{width: 40}} {...register("wins")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.winsOverTime}</div>
-                            ) : (
-                                <input
-                                    style={{width: 40}} {...register("winsOverTime")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.loss}</div>
-                            ) : (
-                                <input style={{width: 40}} {...register("loss")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.loseOverTime}</div>
-                            ) : (
-                                <input
-                                    style={{width: 40}} {...register("loseOverTime")}/>
-                            )}
-                        </td>
-
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.goalBall}</div>
-                            ) : (
-                                <input
-                                    style={{width: 40}} {...register("goalBall")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.missBall}</div>
-                            ) : (
-                                <input
-                                    style={{width: 40}} {...register("missBall")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id !== activeTeamId ? (
-                                <div>{item.score}</div>
-                            ) : (
-                                <input style={{width: 40}} {...register("score")}/>
-                            )}
-                        </td>
-                        <td>
-                            {item._id === activeTeamId && (
-                                <>
-                                    <Button variant="light col-4" onClick={handleSubmit(sendEditTable)}>Сохранить</Button>
-                                    <Button variant="light col-4" onClick={() => deleteTable(item._id)}>Delete</Button>
-                                </>
-
-                            )}
-                        </td>
-
-                    </tr>
-
-                ))}
+                        <tr className='table-tr' key={item._id}>
+                            <td>{idx + 1}
+                                <span style={{marginLeft: 8, cursor: 'pointer'}}
+                                      onClick={() => setActiveTeamId(item._id)}
+                                      className="material-symbols-outlined edit-icon">edit</span>
+                            </td>
+                            <td className="d-flex align-items-center">
+                                <img style={{objectFit: "contain"}} className="logo-table " height='55' alt='logo'
+                                     src={item.logoTeam}
+                                />
+                                {item._id !== activeTeamId ? (
+                                    <div style={{fontSize: 14, marginLeft: 12}}
+                                         className="d-none d-lg-block">{item.nameTeam}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 100, marginLeft: 12}}
+                                        {...register("nameTeam")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.games}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("games")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.wins}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("wins")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.winsOverTime}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("winsOverTime")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.loss}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("loss")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.loseOverTime}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("loseOverTime")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.goalBall}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("goalBall")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.missBall}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("missBall")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id !== activeTeamId ? (
+                                    <div>{item.score}</div>
+                                ) : (
+                                    <input
+                                        className='edit-table-input'
+                                        style={{width: 40}}
+                                        {...register("score")}/>
+                                )}
+                            </td>
+                            <td>
+                                {item._id === activeTeamId && (
+                                    <div className='d-flex justify-content-around'>
+                                        <span
+                                            className="material-symbols-outlined save-icon"
+                                            onClick={handleSubmit(sendEditTable)}>
+                                           check
+                                        </span>
+                                        <span
+                                            onClick={() => deleteTable(item._id)}
+                                            className="material-symbols-outlined del-icon">
+                                            delete_forever
+                                        </span>
+                                    </div>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
             {championshipStore.loaderNotification && (
-                <Notification text='Комаанда была успешно отредактирована' icon='check_circle'/>
+                <Notification text='Команда была успешно отредактирована' icon='check_circle'/>
+            )}
+            {championshipStore.loaderNotificationDelete && (
+                <Notification text='Команда была успешно удалена' icon='check_circle'/>
             )}
         </div>
     );

@@ -18,7 +18,7 @@ const Championship = observer(() => {
     }, [])
 
     return (
-        <div className='pt-3'>
+        <div className='pt-3 pb-5'>
             <Link style={{fontWeight: 300, textDecoration: "none", color: "gold"}} to='/championship/table'>Добавить Команду</Link>
             <Link
                 style={{fontWeight: 300, textDecoration: "none", color: "gold", marginLeft: 16}}
@@ -31,7 +31,7 @@ const Championship = observer(() => {
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th className="d-none d-lg-block">Команда</th>
+                    <th>Команда</th>
                     <th>И</th>
                     <th>В</th>
                     <th>ОТВ</th>
@@ -47,13 +47,13 @@ const Championship = observer(() => {
                     .slice()
                     .sort((a,b) => b.score - a.score)
                     .map((item, idx) => (
-                    <tr key={item._id}>
+                    <tr key={item._id} className='table-tr-main'>
                         <td>{idx + 1}</td>
                         <td className="d-flex align-items-center">
-                            <img className="logo-table " width='60' alt='logo'
+                            <img className="logo-table " width='50' alt='logo'
                                  src={item.logoTeam}
                             />
-                            <div style={{fontSize: 14}} className="d-none d-lg-block">{item.nameTeam}</div>
+                            <div style={{fontSize: 14,marginLeft:12,paddingTop:0}} >{item.nameTeam}</div>
 
                         </td>
                         <td>

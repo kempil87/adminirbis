@@ -36,7 +36,6 @@ const EditClub = observer(() => {
     return (
         <div>
             <div className="d-flex flex-column  align-items-center pt-5">
-
                 <div className="d-flex  input-container">
                     <div>
                         <label className="d-flex justify-content-between">

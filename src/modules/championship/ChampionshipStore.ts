@@ -5,6 +5,7 @@ import {IChamp, ITeam} from "./ChampionshipTypes";
 export class ChampionshipStore {
     loader: boolean = false;
     loaderNotification: boolean = false;
+    loaderNotificationDelete: boolean = false;
 
     allChamp: IChamp[] = [];
     champItem: IChamp | null = null;
@@ -19,7 +20,6 @@ export class ChampionshipStore {
     }
 
     getAllChampionship = async () => {
-        this.setLoading(true)
 
         try {
             const res = await this.championshipService.getAllChampionship();
@@ -29,7 +29,7 @@ export class ChampionshipStore {
         } catch (e) {
             console.log("Error", e);
         } finally {
-            this.setLoading(false);
+
         }
     };
 
@@ -165,7 +165,7 @@ export class ChampionshipStore {
             const res = await this.championshipService.deleteTableItem(id);
 
             if (res) {
-                this.setLoadingNotification(true)
+                this.setLoadingNotificationDelete(true)
                 runInAction(() => {
                     this.table = this.table.filter((n) => n._id !== id);
                 });
@@ -174,7 +174,7 @@ export class ChampionshipStore {
             console.log("Error", e);
         } finally {
             setTimeout(() => {
-                this.setLoadingNotification(false);
+                this.setLoadingNotificationDelete(false);
             }, 1800)
         }
     }
@@ -188,6 +188,11 @@ export class ChampionshipStore {
     setLoadingNotification = (value: boolean) => {
         runInAction(() => {
             this.loaderNotification = value;
+        });
+    };
+    setLoadingNotificationDelete = (value: boolean) => {
+        runInAction(() => {
+            this.loaderNotificationDelete = value;
         });
     };
 }

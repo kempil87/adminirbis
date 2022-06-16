@@ -13,7 +13,6 @@ const EditMedia = observer(() => {
 
     const {mediaStore} = useRootStore()
     const {register, handleSubmit, setValue} = useForm();
-    console.log(mediaStore.mediaItem)
 
     const setFormValues = () =>{
         Object.keys(mediaStore.mediaItem).forEach((key) => {

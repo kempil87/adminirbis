@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {useRootStore} from "../../../base/hooks/useRootStore";
 import {observer} from "mobx-react";
+import Notification from "../../../components/ui/Notification/Notification";
 
 const AddTableClub = observer(() => {
 
@@ -15,6 +16,7 @@ const AddTableClub = observer(() => {
       championshipStore.createTeam(data)
     }
 
+    // @ts-ignore
     return (
         <div>
             <h5>Добавить Клуб</h5>
@@ -39,9 +41,9 @@ const AddTableClub = observer(() => {
                     </label>
                 </div>
                 <Button className='col-6 mt-4 ' variant="light" onClick={handleSubmit(createTeam)}>Создать</Button>
-                {/*{championshipStore.loaderNotification && (*/}
-                {/*    <Notification text='Игра была успешно добавлена' icon='check_circle'/>*/}
-                {/*)}*/}
+                {championshipStore.loaderNotification && (
+                    <Notification text='Игра была успешно добавлена' icon='check_circle'/>
+                )}
 
             </div>
         </div>
