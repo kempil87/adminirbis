@@ -5,6 +5,7 @@ import {IClub} from "./ClubTypes";
 export class ClubStore {
     loader: boolean = false;
     loaderNotification: boolean = false;
+    searchClub: string = '';
 
     allClub: IClub[] = [];
     clubItem: IClub | null = null;
@@ -113,6 +114,12 @@ export class ClubStore {
     setLoadingNotification = (value: boolean) => {
         runInAction(() => {
             this.loaderNotification = value;
+        });
+    };
+
+    filterClub = (value:string) => {
+        runInAction(() => {
+            this.searchClub = value;
         });
     };
 }

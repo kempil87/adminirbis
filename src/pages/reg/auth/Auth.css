@@ -11,15 +11,15 @@
     /*background-image: url("https://xn--m1agla.xn--p1ai/wp-content/uploads/2021/12/Irbis-111x128.png");*/
     font-family: 'Montserrat', sans-serif;
 
-    height: 84vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .auth-title {
-    font-size: 36px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 26px;
+    color: rgba(0, 0, 0, 0.8);
     font-weight: 500;
 }
 
@@ -43,7 +43,6 @@
 }
 
 .auth-btn {
-    width: 72%;
     background-color: rgb(189, 187, 187);
     display: flex;
     justify-content: center;
@@ -64,22 +63,20 @@
 }
 
 .auth-input {
-    border-left: none;
-    border-top: none;
-    border-right: none;
     background: none;
+    height: 40px;
+    width: 80%;
     outline: none;
+    border-radius: 4px;
     padding-left: 8px;
-    font-size: 20px;
+    font-size: 16px;
 }
 .auth-input-war{
-    border-left: none;
-    border-top: none;
-    border-right: none;
+    border-radius: 8px;
     background: none;
     outline: none;
     padding-left: 8px;
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 2px solid #cc0909;
 }
 

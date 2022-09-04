@@ -5,7 +5,7 @@ import "./Header.css"
 import {useRootStore} from "../../base/hooks/useRootStore";
 import {observer} from "mobx-react";
 
-export const Header = observer(({setTheme, theme}) => {
+export const Header = observer(({theme,setTheme}) => {
     const {authStore} = useRootStore();
 
     const logout = () => {

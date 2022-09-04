@@ -3,6 +3,11 @@
     transition: linear .4s;
 
 }
+.ant-input-clear-icon{
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
+}
 
 .news_card:hover img{
     transition: linear .4s;

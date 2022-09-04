@@ -1,6 +1,6 @@
 import React from 'react';
 import './ClubPage.css'
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Link} from "react-router-dom";
 import Notification from "../../../../components/ui/Notification/Notification";
 import {IrbisLoader} from "../../../../components/ui/Loaders/IrbisLoader";
@@ -9,18 +9,15 @@ import {observer} from "mobx-react";
 import {useRootStore} from "../../../../base/hooks/useRootStore";
 
 const ClubPage = observer(() => {
-    const [searchClub, setSearchClub] = useState('');
     const {clubStore} = useRootStore();
 
     const filterClub = clubStore.allClub.filter(club =>{
-            return club.name.toLowerCase().includes(searchClub.toLowerCase())
+            return club.name.toLowerCase().includes(clubStore.searchClub.toLowerCase())
         })
-
 
     useEffect(() => {
         clubStore.getAllClub()
     }, [])
-
 
     return (
         <div className="pt-3">
@@ -36,11 +33,11 @@ const ClubPage = observer(() => {
                         className='search-club'
                         placeholder='Поиск'
                         type='text'
-                        value={searchClub}
-                        onChange={(e) =>setSearchClub(e.target.value)}
+                        value={clubStore.searchClub}
+                        onChange={(e) =>clubStore.filterClub(e.target.value)}
                     />
-                    {searchClub &&(
-                        <span onClick={() =>setSearchClub('')} style={{fontWeight:200,right:0,cursor:"pointer",zIndex:605}} className="material-symbols-outlined position-absolute clear-input">clear</span>
+                    {clubStore.searchClub &&(
+                        <span onClick={() =>clubStore.filterClub('')} style={{fontWeight:200,right:0,cursor:"pointer",zIndex:605}} className="material-symbols-outlined position-absolute clear-input">clear</span>
                     )}
                 </form>
 
@@ -60,6 +57,9 @@ const ClubPage = observer(() => {
                                 position={c.position}
                             />
                         ))}
+                        {filterClub.length === 0 &&(
+                            <div>По вашему запросу ничего не найдено</div>
+                        )}
                     </>
                 )}
             </div>

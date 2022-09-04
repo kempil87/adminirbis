@@ -2,6 +2,7 @@ import {makeAutoObservable, runInAction} from "mobx";
 import NewsService from "./NewsService";
 import {INews} from "./NewsTypes";
 import {IShop} from "../shop/ShopTypes";
+import { format } from "date-fns";
 
 export class NewsStore {
     loader: boolean = false;
@@ -48,11 +49,6 @@ export class NewsStore {
     };
 
     deleteNews = async (id: string) =>{
-        const res = window.confirm("Вы действительно хотите удалить новость?")
-        if (!res) {
-            return
-        }
-
         try {
             const res = await this.newsService.deleteNews(id);
 
@@ -72,7 +68,8 @@ export class NewsStore {
     }
 
     addNews = async (data: INews) => {
-
+        data.date = format( new Date(),'dd-MM-yyyy')
+        console.log(data)
         try {
             const res = await this.newsService.addNews(data);
 

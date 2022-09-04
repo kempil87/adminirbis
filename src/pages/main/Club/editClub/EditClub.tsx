@@ -24,6 +24,7 @@ const EditClub = observer(() => {
 
     const sendEditClub = (data) => {
         clubStore.editClub(data)
+
         setTimeout(() => {
             navigate('/club');
         },1900)

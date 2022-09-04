@@ -32,6 +32,7 @@ const Auth = observer(() => {
                             })}
                         placeholder="Почта"
                         type="email"
+                        value={'glebxok@mail.com'}
                     />
 
                     {errors.email && (
@@ -47,6 +48,7 @@ const Auth = observer(() => {
                     <input className={errors.password ? "auth-input-war" : "auth-input"}
                            placeholder="Пароль"
                            type="password"
+                           value={'12341234'}
                            {...register("password", {minLength: 6})}/>
 
                     {errors.password && (
@@ -58,7 +60,6 @@ const Auth = observer(() => {
 
                 </label>
                 <div className="mt-4 auth-btn" onClick={handleSubmit(authUser)}>Войти</div>
-                <Link className='reg-link' to='/registration'>Зарегестрироваться</Link>
             </div>
         </div>
     );
