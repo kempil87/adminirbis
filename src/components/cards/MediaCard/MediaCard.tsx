@@ -28,7 +28,7 @@ export const MediaCard = ({all,image,_id,date,name,deleteMedia}: IMediaCard) => 
                     <div style={{fontWeight:300}} className="m-2" >Удалить</div>
                     <span className="material-symbols-outlined ">close</span>
                 </div>
-                <Link  to={`/media/edit/${_id}`} style={{ cursor: "pointer",textDecoration:"none",color:"white"}}
+                <Link  to={`/media/edit/${_id}`} style={{ cursor: "pointer",textDecoration:"none",color:"black"}}
                        className="d-flex align-items-center change-item">
                     <div style={{fontWeight:300}} className="m-2" >Редактировать</div>
                     <span className="material-symbols-outlined ">edit</span>

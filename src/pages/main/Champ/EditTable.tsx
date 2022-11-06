@@ -62,6 +62,7 @@ const EditTable = observer(() => {
                     <th>ЗМ</th>
                     <th>ПМ</th>
                     <th>О</th>
+                    <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>

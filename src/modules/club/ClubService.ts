@@ -10,6 +10,7 @@ export default class ClubService {
 
     getAllClub = async (): Promise<IClub[]> => {
         const { data } = await this.clubApi.getAllClub();
+        console.log(data)
         return data.reverse();
     };
 

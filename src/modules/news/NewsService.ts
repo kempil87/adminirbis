@@ -1,5 +1,7 @@
 import NewsApi from "./NewsApi";
 import {INewsResponse, INews} from "./NewsTypes";
+import {showAlert} from "../../components/customAlert/CustomAlert/showAlert";
+import toast from "react-hot-toast";
 
 export default class NewsService {
     newsApi: NewsApi;
@@ -10,6 +12,7 @@ export default class NewsService {
 
     getAllNews = async (): Promise<INews[]> => {
         const { data } = await this.newsApi.getAllNews();
+        console.log(data)
         return data.reverse();
     };
     getNews = async (id): Promise<INews> => {
@@ -19,6 +22,7 @@ export default class NewsService {
 
     deleteNews = async (id: string): Promise<INewsResponse> => {
         const { data } = await this.newsApi.deleteNews(id);
+        toast.success('Новость была успешно удалена')
         return data;
     };
 

@@ -50,7 +50,7 @@ const Championship = observer(() => {
                     <tr key={item._id} className='table-tr-main'>
                         <td>{idx + 1}</td>
                         <td className="d-flex align-items-center">
-                            <img className="logo-table " width='50' alt='logo'
+                            <img className="logo-table " style={{maxHeight:50}} alt='logo'
                                  src={item.logoTeam}
                             />
                             <div style={{fontSize: 14,marginLeft:12,paddingTop:0}} >{item.nameTeam}</div>

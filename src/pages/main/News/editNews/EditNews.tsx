@@ -1,128 +1,68 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {Button} from 'antd';
+import {Button, Select} from 'antd';
 import {useNavigate} from 'react-router-dom';
 import {useRootStore} from "../../../../base/hooks/useRootStore";
-import {useForm} from "react-hook-form";
+import {FormProvider, useForm} from "react-hook-form";
 import Notification from "../../../../components/ui/Notification/Notification";
 import {observer} from "mobx-react";
 import {api} from "../../../../base/axios";
+import {CustomPageHeader} from "../../../../components/pageHeader/CustomPageHeader";
+import {CustomInput} from "../../../../components/form-elements/CustomInput";
+import {CustomSelect} from "../../../../components/form-elements/CustomSelect";
+import {CustomButton} from "../../../../components/customButton/CustomButton";
+
+const breadcrumbs = [{title: 'Новости' ,path:'/news'},{title: 'Редактирование новости'}]
 
 const EditNews = observer(() => {
     const {id} = useParams()
-    const {newsStore} = useRootStore()
-    const navigate = useNavigate();
-    const [clubLink,setClubLink] = useState([])
-    const [link,setLink] = useState('')
-
-    const {register, handleSubmit, setValue} = useForm();
+    const {newsStore, clubStore} = useRootStore();
+    const navigate = useNavigate()
+    const formMethods = useForm();
+    const {handleSubmit, setValue,watch} = formMethods
 
     const setFormValues = () => {
         Object.keys(newsStore.newsItem).forEach((key) => {
-            // @ts-ignore
             setValue(String(key), newsStore.newsItem[key])
         })
     }
 
-    const handleChange = (value:string) => {
-        console.log(value)
-        setLink(value)
-    }
-
-    useEffect(() => {
-        api.get("/club").then((res) => {
-            setClubLink(res.data)
-        })
-    }, [])
-
-    const sendEditNews = (data) => {
+    const editNews = (data) => {
         newsStore.editNews(data)
         setTimeout(() => {
             navigate('/news')
-        }, 1900)
+        }, 1000)
     }
 
     useEffect(() => {
+        clubStore.getAllClub()
         newsStore.getNews(id).then(() => setFormValues())
     }, [])
 
 
     return (
+        <>
+            <CustomPageHeader breadcrumbs={breadcrumbs} title={`Редактирование новости ${id}`}/>
 
-        <div className="d-flex  pt-5 flex-column ">
-            <div className="w-50">
-                <label className="d-flex ">
-                    <input
-                        className='addnews-input'
-                        placeholder='Название'
-                        {...register("title")}/>
-                </label>
-
-                <label className="d-flex mt-3">
-                    <input
-                        className='addnews-input'
-                        placeholder='Дата'
-                        {...register("date")}/>
-                </label>
-
-                <label className="d-flex mt-3">
-                    <input
-                        className='addnews-input'
-                        placeholder='Картинка (url)'
-                        {...register("image")}/>
-                </label>
-
-                <label className="d-flex  mt-3">
-                    <input
-                        className='addnews-input'
-                        placeholder=' Значок'
-                        {...register("badge")}/>
-                </label>
-
-                <label className="d-flex   mt-3">
-                    <select
-                        style={{ width:'100%' }}
-                        placeholder='Ссылка'
-                        onChange={handleChange}
-                        defaultValue={''}
-                        className='addnews-input'
-                        {...register("source")}
-                    >
-                        <option  value={''} disabled>Выберите игрока,тренера...</option>
-                        {clubLink.map((i) => (
-                            <option value={i._id} key={i._id}>{i?.name}</option>
-                        ))}
-                    </select>
-                </label>
-
-                <label className="d-flex  justify-content-between mt-3">
-                    <input
-                        className='addnews-input'
-                        placeholder='Тег'
-                        {...register("tag")}/>
-                </label>
-
-                <label className="d-flex justify-content-between mt-3">
-                    <textarea
-
-                        className='addnews-text-area'
-                        placeholder='Описание'
-                        {...register("subtitle")}/>
-                </label>
-                <label className="d-flex justify-content-between mt-3">
-                    <textarea
-                        className='addnews-text-area'
-                        placeholder='крат.Описание'
-                        {...register("shortSubTitle")}/>
-                </label>
-                <Button  style={{color:"white",backgroundColor:"rgb(78,168,246)",border:"none"}}  className='mt-5 w-100' onClick={handleSubmit(sendEditNews)}>Сохранить</Button>
-
-                {newsStore.loaderNotification && (
-                    <Notification text='Новость была успешно отредактирована' icon='check_circle'/>
-                )}
-            </div>
-        </div>
+            <FormProvider {...formMethods}>
+                <div className='flex space-y-3 flex-col'>
+                    <CustomInput name='title' label='Название'/>
+                    <img alt='Фото' src={watch('image')} className='w-[230px] rounded-[10px] object-cover'/>
+                    <CustomInput name='image' label=' Фото (url)'/>
+                    <CustomInput name='badge' label='Значок'/>
+                    <CustomSelect
+                        name='link'
+                        label='Ссылка'
+                        options={clubStore.allClub}
+                    />
+                    <CustomInput name='tag' label='Тэг'/>
+                    <CustomInput name='subtitle' label='Описание'/>
+                    <CustomInput name='shortSubTitle' label='крат.Описание'/>
+                    <CustomButton className='max-w-[240px]' onClick={handleSubmit(editNews)}>Создать</CustomButton>
+                </div>
+            </FormProvider>
+        </>
     );
 });
 

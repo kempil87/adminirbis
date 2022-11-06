@@ -1,0 +1,22 @@
+/*.ant-select-selector {*/
+/*    @apply !shadow-none !rounded-lg !px-3 !min-h-[36px] !bg-bg hover:!border-input-border2 items-center*/
+/*}*/
+
+/*.ant-select-multiple .ant-select-selection-rr-search {*/
+/*    margin-inline-start: 0 !important;*/
+/*}*/
+
+/*.ant-select-focused .ant-select-selector {*/
+/*    @apply !border-primary;*/
+/*}*/
+/*.ant-select-selection-item{*/
+/*    @apply !border-primary items-center !rounded;*/
+/*}*/
+
+/*.ant-select-selection-rr-search-input {*/
+/*    @apply !h-full;*/
+/*}*/
+
+/*.ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder {*/
+/*    @apply !leading-[34px];*/
+/*}*/

@@ -26,13 +26,11 @@ export class AuthStore {
                 this.token = res.token;
                 this.email = res.email;
             });
-
+            this.setLoading(false);
             localStorage.setItem("token", res.token);
             localStorage.setItem("email", res.email);
         } catch (e) {
             console.log("Error", e);
-        } finally {
-            this.setLoading(false);
         }
     };
 
@@ -56,8 +54,6 @@ export class AuthStore {
 
 
     logout = () => {
-        this.setLoading(true)
-
         this.setToken("")
         localStorage.clear()
     };

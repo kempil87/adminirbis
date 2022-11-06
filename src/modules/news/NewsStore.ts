@@ -3,6 +3,7 @@ import NewsService from "./NewsService";
 import {INews} from "./NewsTypes";
 import {IShop} from "../shop/ShopTypes";
 import { format } from "date-fns";
+import {showAlert} from "../../components/customAlert/CustomAlert/showAlert";
 
 export class NewsStore {
     loader: boolean = false;
@@ -69,7 +70,7 @@ export class NewsStore {
 
     addNews = async (data: INews) => {
         data.date = format( new Date(),'dd-MM-yyyy')
-        console.log(data)
+
         try {
             const res = await this.newsService.addNews(data);
 
