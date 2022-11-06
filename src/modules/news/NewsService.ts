@@ -28,11 +28,13 @@ export default class NewsService {
 
     editNews = async (newsData): Promise<INewsResponse> => {
         const { data } = await this.newsApi.editNews(newsData);
+        toast.success('Новость была успешно отредактирована')
         return data;
     };
 
     addNews = async (newsData: INews): Promise<INewsResponse> => {
         const { data } = await this.newsApi.addNews(newsData);
+        toast.success('Новость была успешно создана')
         return data;
     };
 }

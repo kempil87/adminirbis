@@ -1,35 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import Notification from "../../../../components/ui/Notification/Notification";
-import "./AddNews.css"
-import {Link, useNavigate} from "react-router-dom";
-import {FormProvider, useForm} from "react-hook-form";
+import React from 'react';
+import {FormProvider} from "react-hook-form";
 import {observer} from "mobx-react";
-import {useRootStore} from "../../../../base/hooks/useRootStore";
-import {api} from "../../../../base/axios";
-import Form from 'react-bootstrap/Form';
-import {Select, Button} from "antd";
 import {CustomButton} from "../../../../components/customButton/CustomButton";
 import {CustomPageHeader} from "../../../../components/pageHeader/CustomPageHeader";
 import {CustomInput} from "../../../../components/form-elements/CustomInput";
 import {CustomSelect} from "../../../../components/form-elements/CustomSelect";
+import {useAddNews} from "./useAddNews";
 
 const breadcrumbs = [{title: 'Новости' ,path:'/news'},{title: 'Создание новости'}]
 
 const AddNews = observer(() => {
-    const {newsStore, clubStore} = useRootStore();
-    const nav = useNavigate()
-    const formMethods = useForm();
-    const {handleSubmit, reset} = formMethods
-
-    const createNews = async (data) => {
-        await newsStore.addNews(data)
-        reset()
-        nav(`/news`)
-    }
-
-    useEffect(() => {
-        clubStore.getAllClub()
-    }, [])
+    const {clubStore,formMethods,createNews} = useAddNews();
 
     return (
         <>
@@ -48,7 +29,7 @@ const AddNews = observer(() => {
                     <CustomInput name='tag' label='Тэг'/>
                     <CustomInput name='subtitle' label='Описание'/>
                     <CustomInput name='shortSubTitle' label='крат.Описание'/>
-                    <CustomButton className='max-w-[240px]' onClick={handleSubmit(createNews)}>Создать</CustomButton>
+                    <CustomButton className='max-w-[240px]' onClick={formMethods.handleSubmit(createNews)}>Создать</CustomButton>
                 </div>
             </FormProvider>
         </>
